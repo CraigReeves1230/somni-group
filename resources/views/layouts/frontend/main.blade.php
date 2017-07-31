@@ -56,7 +56,8 @@
                 <li><a href="property_listing.html">For Rent</a></li>
                 <li><a href="property_grid.html">For Sale</a></li>
                 <li><a href="agent_list.html">Agents</a></li>
-                <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Templates <span class="caret"></span></a>
+                <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                         aria-haspopup="true" aria-expanded="false">More <span class="caret"></span></a>
                     <ul class="dropdown-menu mega">
                         <li class="navbar-text">
                             <div class="column">
@@ -131,12 +132,12 @@
                     <div class="col-md-4">
                         <p><img src="/img/somni-logo-main.png" /></p>
                         <address>
-                            <strong>Twitter, Inc.</strong><br>
+                            <strong>The Somni Group</strong><br>
                             1355 Market Street, Suite 900<br>
                             San Francisco, CA 94103<br>
                             <abbr title="Phone">P:</abbr> (123) 456-7890
                         </address>
-                        <p class="text-muted">Copyright &copy; 2016<br />
+                        <p class="text-muted">Copyright &copy; 2017 The Somni Group<br />
                             All rights reserved</p>
                     </div>
                     <div class="col-md-2">

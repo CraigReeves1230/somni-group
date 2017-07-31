@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\Mailer;
+use App\Services\Repositories\UserRepository;
 use App\Services\TokenMaker;
 use App\User;
 use Carbon\Carbon;
@@ -14,9 +15,11 @@ use Illuminate\Support\Facades\Session;
 class UsersController extends Controller
 {
     private $token_service;
+    private $user_repository;
 
-    function __construct(TokenMaker $token_service){
+    function __construct(TokenMaker $token_service, UserRepository $user_repository){
         $this->token_service = $token_service;
+        $this->user_repository = $user_repository;
     }
 
     // go to form to create a user
@@ -27,20 +30,8 @@ class UsersController extends Controller
     // save a user
     function save(Request $request){
 
-        // validate request
-        $this->validate($request, [
-            'name' => 'required|string|min:2|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:7|confirmed',
-            'checkbox' => 'required'
-        ]);
-
-        // create a new user
-        $user = User::create([
-            'name' => $request->name,
-            'password' => bcrypt($request->password),
-            'email' => strtolower($request->email),
-        ]);
+        // create user
+        $user = $this->user_repository->store($request, $this);
 
         // log user in
         Auth::login($user);
@@ -66,8 +57,11 @@ class UsersController extends Controller
 
     function login(Request $request){
 
+        // get the email
+        $email = strtolower($request->email);
+
         // find user
-        if ($user = User::where('email', $request->email)->first() ) {
+        if ($user = $this->user_repository->find_by('email', $email)) {
             if(Hash::check($request->password, $user->password)) {
 
                 // log user in...
@@ -111,7 +105,7 @@ class UsersController extends Controller
         // find user by email
         $in_email = strtolower($request->email);
 
-        if($user = User::where('email', $in_email)->first()) {
+        if($user = $this->user_repository->find_by('email', $in_email)) {
 
             // get data needed for sending information
             $reset_token = $token->create();
@@ -120,7 +114,7 @@ class UsersController extends Controller
             // update reset digest for user as well as the reset digest timeout
             $user->reset_digest = $reset_token['key_encoded'];
             $user->reset_digest_timeout = Carbon::now()->addMinutes(15);
-            $user->save();
+            $this->user_repository->save($user);
 
             // send password reset email
             $mailer->send_mail('noreply@somnigroup.com', 'Somni Group', $user, 'Password Reset Request', 'email.password_reset',
@@ -128,23 +122,23 @@ class UsersController extends Controller
         }
 
         // return to homepage with flash message
-        Session::flash('info', 'An email has been sent to your account with instructions on how to reset your password.');
+        Session::flash('info', 'An email has not been sent to your account with instructions on how to reset your password.');
         return redirect('/');
     }
 
     function password_reset_form($token, $id){
 
-        if($user = User::find($id)) {
+        if($user = $this->user_repository->find($id)) {
             if(Hash::check($token, $user->reset_digest)){
                if(Carbon::now() <= $user->reset_digest_timeout) {
                    return view('auth.passwords.reset', compact('token', 'user'));
                }
             }
-        } else {
-            // the link either has expired or invalid
-            Session::flash('error', 'The reset link is invalid or has expired.');
-            return redirect('/');
         }
+
+        // the link either has expired or is invalid
+        Session::flash('error', 'The reset link is invalid or has expired.');
+        return redirect('/');
     }
 
     function password_reset(Request $request, $token, $id){
@@ -152,7 +146,7 @@ class UsersController extends Controller
         // validate info
         $this->validate($request, ['email' => 'required', 'password' => 'required|string|min:7|confirmed']);
 
-        if($user = User::find($id)){
+        if($user = $this->user_repository->find($id)){
             if($user->email == strtolower($request->email)){
                 if(Hash::check($token, $user->reset_digest)){
                     if(Carbon::now() <= $user->reset_digest_timeout) {
@@ -165,7 +159,7 @@ class UsersController extends Controller
                         $user->reset_digest = null;
                         $user->reset_digest_timeout = null;
 
-                        $user->save();
+                        $this->user_repository->save($user);
                         Auth::login($user);
                         Session::flash('success', 'Your password has successfully been reset.');
                         return redirect('home');
