@@ -76,5 +76,5 @@
             </div>
         </div>
     </div>
-    <script src="js/auth/register_form.js"></script>
+    <script src="/js/auth/register_form.js"></script>
 @endsection

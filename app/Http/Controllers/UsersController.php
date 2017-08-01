@@ -55,6 +55,18 @@ class UsersController extends Controller
         return view('auth.login');
     }
 
+    function email_validate(Request $request){
+        if($request->ajax()){
+            $test_email = $request->email;
+            if($this->user_repository->find_by('email', $test_email)){
+                $email_unique = false;
+            } else {
+                $email_unique = true;
+            }
+            return response()->json(['email_unique' => $email_unique]);
+        }
+    }
+
     function login(Request $request){
 
         // get the email
@@ -130,9 +142,9 @@ class UsersController extends Controller
 
         if($user = $this->user_repository->find($id)) {
             if(Hash::check($token, $user->reset_digest)){
-               if(Carbon::now() <= $user->reset_digest_timeout) {
+               //if(Carbon::now() <= $user->reset_digest_timeout) {
                    return view('auth.passwords.reset', compact('token', 'user'));
-               }
+              // }
             }
         }
 
@@ -143,13 +155,18 @@ class UsersController extends Controller
 
     function password_reset(Request $request, $token, $id){
 
+        // make sure password is properly formatted even if Javascript is turned off (regular expression)
+        if (!preg_match("/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{7,})$/", $request->password)){
+            return redirect()->back();
+        }
+
         // validate info
         $this->validate($request, ['email' => 'required', 'password' => 'required|string|min:7|confirmed']);
 
         if($user = $this->user_repository->find($id)){
             if($user->email == strtolower($request->email)){
                 if(Hash::check($token, $user->reset_digest)){
-                    if(Carbon::now() <= $user->reset_digest_timeout) {
+                   // if(Carbon::now() <= $user->reset_digest_timeout) {
 
                         // reset password
                         $new_password = bcrypt($request->password);
@@ -162,13 +179,24 @@ class UsersController extends Controller
                         $this->user_repository->save($user);
                         Auth::login($user);
                         Session::flash('success', 'Your password has successfully been reset.');
-                        return redirect('home');
-                    }
+
+                        if($request->ajax()){
+                            return response()->json(['ok' => true]);
+                        } else {
+                            return redirect('home');
+                        }
+                  //  }
                 }
             }
         }
+
         Session::flash('error', 'The reset link is invalid, has expired, or an invalid email address was provided.');
-        return redirect('/');
+
+        if($request->ajax()){
+            return response()->json(['ok' => false]);
+        } else {
+            return redirect('/');
+        }
     }
 
 }

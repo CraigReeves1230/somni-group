@@ -53,4 +53,21 @@ module.exports = {
     }
 };
 
+module.exports = {
+    entry: "./resources/assets/js/auth/password_reset.js",
+    output: {
+        filename: "./public/js/auth/password_reset.js"
+    },
+    module: {
+        loaders: [
+            {
+                exclude: /node_modules/,
+                loader: 'babel-loader',
+                query: {
+                    presets: ['es2015', 'react']
+                }
+            }
+        ]
+    }
+};
 

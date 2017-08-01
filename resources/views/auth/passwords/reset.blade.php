@@ -19,7 +19,7 @@
                         <div class="alert alert-danger">{{session('error')}}</div>
                     @endif
 
-                    <form class="form-horizontal" method="POST"
+                    <form id="form" class="form-horizontal" method="POST"
                           action="{{ route('password_reset_do', ['id' => $user->id, 'token' => $token]) }}">
                         {{ csrf_field() }}
 
@@ -34,6 +34,8 @@
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
                                 @endif
+                                <div id="email_error" class="error-message"><!-- filled by javascript automatically
+                                --></div>
                             </div>
                         </div>
 
@@ -48,19 +50,25 @@
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>
                                 @endif
+                                <div id="password_error" class="error-message"><!-- filled by javascript automatically
+                                --></div>
                             </div>
                         </div>
 
                         <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
                             <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
                             <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                                <input id="password_confirm" type="password" class="form-control"
+                                       name="password_confirmation" required>
 
                                 @if ($errors->has('password_confirmation'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('password_confirmation') }}</strong>
                                     </span>
                                 @endif
+                                <div id="password_confirm_error" class="error-message"><!-- filled by javascript
+                                automatically
+                                --></div>
                             </div>
                         </div>
 
@@ -77,4 +85,5 @@
         </div>
     </div>
 </div>
+<script src="/js/auth/password_reset.js"></script>
 @endsection

@@ -42,15 +42,5 @@ Route::get('/password_reset/do/{token}/{id}', 'UsersController@password_reset_fo
 Route::post('/password_reset/do/{token}/{id}', 'UsersController@password_reset')->name('password_reset_do')
     ->middleware('guest');
 
-Route::post('/email_validate', function(Request $request){
-    if($request->ajax()){
-        $test_email = $request->email;
-        if(User::where('email', $test_email)->first()){
-            $email_unique = false;
-        } else {
-            $email_unique = true;
-        }
-        return response()->json(['email_unique' => $email_unique]);
-    }
-})->name('email_validate');
+Route::post('/user/email_validate', 'UsersController@email_validate')->name('email_validate');
 
