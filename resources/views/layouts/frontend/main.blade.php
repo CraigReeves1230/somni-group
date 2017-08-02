@@ -67,14 +67,13 @@
                                     <!-- these will vary depending on if user is logged in -->
                                     @if(Auth::guest())
                                         <li class="title">Login/Signup Pages</li>
-                                        <li><a href="{{route('login')}}">Sign In</a></li>
+                                        <li><a href="{{route('login_user')}}">Sign In</a></li>
                                         <li><a href="{{route('register_user')}}">Register</a></li>
                                         <li><a href="forgot-password.html">Forgot Password</a></li>
                                     @else
                                         <li><a href="#">My Account</a></li>
                                         <li><a href="{{route('logout')}}">Sign Out</a></li>
                                     @endif
-
                                 </ul>
                             </div>
                             <div class="column">
@@ -86,7 +85,7 @@
                                     <li><a href="property_listing.html">Property List View</a></li>
                                     <li><a href="property_grid.html">Property Grid View</a></li>
                                     <li><a href="property_single.html">Property Single View</a></li>
-                                    <li><a href="add_listing.html">Add Listing</a></li>
+                                    <li><a href="{{route('add_listing')}}">Add Listing</a></li>
                                     <li><a href="compare.html">Compare Properties</a></li>
                                 </ul>
                             </div>
@@ -105,12 +104,13 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li class="add-listing visible-md visible-lg"><a href="add_listing.html"><span><i class="fa fa-plus" aria-hidden="true"></i> Add listing</span></a></li>
+                <li class="add-listing visible-md visible-lg"><a href="{{route('add_listing')}}"><span><i class="fa
+                fa-plus" aria-hidden="true"></i> Add listing</span></a></li>
 
                 <!-- this varies depending on if user is signed in -->
                 @if(Auth::guest())
-                    <li class="signin"><a href="{{route('login')}}"><span>Sign In</span></a></li>
-                    <li class="register"><a href="{{route('register')}}"><span>Register</span></a></li>
+                    <li class="signin"><a href="{{route('login_user')}}"><span>Sign In</span></a></li>
+                    <li class="register"><a href="{{route('register_user')}}"><span>Register</span></a></li>
                 @else
                     <li><a href="#">Hi, {{Auth::user()->name}}!</a></li>
                     <li><a href="{{route('logout')}}">Sign Out</a></li>

@@ -57,7 +57,7 @@ class UsersController extends Controller
 
     function email_validate(Request $request){
         if($request->ajax()){
-            $test_email = $request->email;
+            $test_email = strtolower($request->email);
             if($this->user_repository->find_by('email', $test_email)){
                 $email_unique = false;
             } else {
@@ -93,7 +93,6 @@ class UsersController extends Controller
             $login_ok = false;
             $error_msg = 'The username or password is incorrect';
         }
-
         // return to home
         if($request->ajax()){
             return response()->json([
@@ -142,9 +141,9 @@ class UsersController extends Controller
 
         if($user = $this->user_repository->find($id)) {
             if(Hash::check($token, $user->reset_digest)){
-               //if(Carbon::now() <= $user->reset_digest_timeout) {
+               if(Carbon::now() <= $user->reset_digest_timeout) {
                    return view('auth.passwords.reset', compact('token', 'user'));
-              // }
+               }
             }
         }
 
@@ -155,18 +154,14 @@ class UsersController extends Controller
 
     function password_reset(Request $request, $token, $id){
 
-        // make sure password is properly formatted even if Javascript is turned off (regular expression)
-        if (!preg_match("/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{7,})$/", $request->password)){
-            return redirect()->back();
-        }
-
         // validate info
-        $this->validate($request, ['email' => 'required', 'password' => 'required|string|min:7|confirmed']);
+        $this->validate($request, ['email' => 'required',
+            'password' => 'required|confirmed|regex:/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{7,})$/']);
 
         if($user = $this->user_repository->find($id)){
             if($user->email == strtolower($request->email)){
                 if(Hash::check($token, $user->reset_digest)){
-                   // if(Carbon::now() <= $user->reset_digest_timeout) {
+                    if(Carbon::now() <= $user->reset_digest_timeout) {
 
                         // reset password
                         $new_password = bcrypt($request->password);
@@ -185,7 +180,7 @@ class UsersController extends Controller
                         } else {
                             return redirect('home');
                         }
-                  //  }
+                    }
                 }
             }
         }

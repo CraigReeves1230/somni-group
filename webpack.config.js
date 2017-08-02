@@ -71,3 +71,21 @@ module.exports = {
     }
 };
 
+module.exports = {
+    entry: "./resources/assets/js/frontend/add_listing.js",
+    output: {
+        filename: "./public/js/frontend/add_listing.js"
+    },
+    module: {
+        loaders: [
+            {
+                exclude: /node_modules/,
+                loader: 'babel-loader',
+                query: {
+                    presets: ['es2015', 'react']
+                }
+            }
+        ]
+    }
+};
+

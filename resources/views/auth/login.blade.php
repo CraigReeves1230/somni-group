@@ -21,7 +21,7 @@
                     </ul>
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" id="login">
-                            <form id="form" action="{{route('login')}}" method="post">
+                            <form id="form" action="{{route('login_user')}}" method="post">
                                 {{csrf_field()}}
                                 <div class="form-group">
                                     <label>Email address</label>

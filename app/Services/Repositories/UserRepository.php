@@ -16,7 +16,7 @@ class UserRepository implements iRepository
             $controller->validate($data, [
                 'name' => 'required|string|min:2|max:255',
                 'email' => 'required|string|email|max:255|unique:users',
-                'password' => 'required|string|min:7|confirmed',
+                'password' => 'required|confirmed|regex:/(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{7,})$/',
                 'checkbox' => 'required'
             ]);
         }

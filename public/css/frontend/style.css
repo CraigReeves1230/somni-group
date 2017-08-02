@@ -522,6 +522,7 @@ a:hover, a:active, a:focus {
 	margin-bottom: 5px;
 	border-radius: 8px;
 	transition: .3s;
+	text-align: center;
 }
 
 @media (min-width: 992px) {
