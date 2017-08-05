@@ -34,7 +34,7 @@ class UserRepository implements iRepository
         return $user;
     }
 
-    function update($data, $controller = null)
+    function update($user, $data, $controller = null)
     {
         // TODO: Implement update() method.
     }
@@ -52,5 +52,9 @@ class UserRepository implements iRepository
     function find_by($criteria, $in_var)
     {
         return User::where($criteria, $in_var)->first();
+    }
+
+    function delete($user){
+        $user->delete();
     }
 }

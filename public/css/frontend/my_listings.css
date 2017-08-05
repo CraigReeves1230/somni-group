@@ -1,0 +1,103 @@
+
+.agent-row {
+    border-color: #8c8c8c;
+    border-style: solid;
+    border-radius: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.profile{
+    max-height: 160px;
+    max-width: 236px;
+}
+
+.listing-profile{
+    padding-top: 20px;
+}
+
+.mls-number{
+    font-size: 1.8rem;
+}
+
+.address-and-info{
+    font-size: 1.5rem;
+    margin-top: 20px;
+}
+
+.area-heading{
+    margin-top: 8px;
+}
+
+.area{
+    color: #2e3436;
+    font-size: 2.3rem;
+}
+
+.price-heading{
+    margin-top: 8px;
+}
+
+.price{
+    font-size: 3.1rem;
+    color: #bf5329;
+}
+
+.more-info{
+    padding-top: 22px;
+    font-size: 1.9rem;
+}
+
+.stat-title{
+    font-weight: bold;
+    line-height: 2.9rem;
+}
+
+.stat{
+    margin-left: 8px;
+}
+
+.add-photo-link{
+    font-size: 1.6rem;
+    margin-top: 10px;
+}
+
+.edit-button{
+    margin-top: 14px;
+}
+
+.edit-button a{
+    font-size: 2.0rem;
+    padding-left: 14px;
+    padding-right: 14px;
+}
+
+.font-success{
+    color: #2ca02c;
+}
+
+.font-error{
+    color: #bf5329;
+}
+
+.align_image{
+    position: relative;
+}
+
+.gallery-image a {
+   opacity: 100;
+}
+
+.gallery-image a:hover{
+    cursor: pointer;
+}
+
+.align_image img{
+    position: absolute;
+    left: -100%;
+}
+
+
+

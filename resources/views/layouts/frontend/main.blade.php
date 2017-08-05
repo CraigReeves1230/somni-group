@@ -56,6 +56,10 @@
                 <li><a href="property_listing.html">For Rent</a></li>
                 <li><a href="property_grid.html">For Sale</a></li>
                 <li><a href="agent_list.html">Agents</a></li>
+                @if(!Auth::guest())
+                    <li><a href="{{route('my_listings')}}">My Listings</a></li>
+                @endif
+                <li><a href=""></a></li>
                 <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                          aria-haspopup="true" aria-expanded="false">More <span class="caret"></span></a>
                     <ul class="dropdown-menu mega">
@@ -63,7 +67,6 @@
                             <div class="column">
                                 <ul class="list-unstyled">
                                     <li class="title"><a href="{{route('index')}}">Homepage</a></li>
-
                                     <!-- these will vary depending on if user is logged in -->
                                     @if(Auth::guest())
                                         <li class="title">Login/Signup Pages</li>
@@ -82,7 +85,7 @@
                                     <li><a href="agent_list.html">Agent List</a></li>
                                     <li><a href="agent.html">Agent Profile</a></li>
                                     <li class="title"><a href="#">Property pages</a></li>
-                                    <li><a href="property_listing.html">Property List View</a></li>
+                                    <li><a href="{{route('my_listings')}}">My Listings</a></li>
                                     <li><a href="property_grid.html">Property Grid View</a></li>
                                     <li><a href="property_single.html">Property Single View</a></li>
                                     <li><a href="{{route('add_listing')}}">Add Listing</a></li>

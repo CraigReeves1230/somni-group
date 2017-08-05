@@ -24,10 +24,7 @@ class CreateListingsTable extends Migration
             $table->double('area')->nullable();
             $table->string('mls');
             $table->string('location')->nullable();
-            $table->string('address');
-            $table->string('city');
-            $table->string('state');
-            $table->string('zip');
+            $table->integer('address_id')->index();
             $table->text('description')->nullable();
             $table->string('status')->default('inactive');
             $table->timestamps();

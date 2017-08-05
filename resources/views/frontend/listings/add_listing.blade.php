@@ -14,16 +14,21 @@
                 </ul>
             </div>
         @endif
+        @if(Session::has('error'))
+            <div class="alert alert-danger">{{session('error')}}</div>
+        @endif
             <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <h1 class="text-center">Add Listing</h1>
                 <div class="lead text-center">* Indicates mandatory fields</div>
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
-                        <form id="form" action="{{route('add_listing')}}" method="post" class="form-horizontal">
+                        <form style="margin-bottom: 10px;" action="/upload-target" class="dropzone"></form>
+                        <form id="form" action="{{route('add_listing')}}"
+                              method="post" class="form-horizontal dropzone">
                             {{csrf_field()}}
                             <div class="form-group">
-                                <label class="col-sm-4 control-label">Property Title*</label>
+                                <label class="col-sm-4 control-label">Listing Name*</label>
                                 <div class="col-sm-8">
                                     <input id="title" name="title" type="text" class="form-control input-lg"
                                            placeholder="Property Title">
@@ -60,7 +65,7 @@
                                         <option value="4">4</option>
                                         <option value="5">5</option>
                                         <option value="6">6</option>
-                                        <option value="7+">7+</option>
+                                        <option value="7">7+</option>
                                     </select>
                                 </div>
                             </div>
@@ -69,14 +74,14 @@
                                 <label class="col-sm-4 control-label">Bathrooms*</label>
                                 <div class="col-sm-8">
                                     <select name="bathrooms" id="bathrooms" class="form-control">
-                                        <option value="" selected="selected">-- Select Bedroom --</option>
+                                        <option value="" selected="selected">-- Select Bathroom --</option>
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
                                         <option value="4">4</option>
-                                        <option value="5+">5+</option>
-                                        <option value="6+">6+</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6+</option>
                                     </select>
                                 </div>
                             </div>
@@ -96,13 +101,6 @@
                             </div>
                             <div id="mls-error" class="error-message"></div>
                             <div class="form-group">
-                                <label class="col-sm-4 control-label">Upload Photos</label>
-                                <div class="col-sm-8">
-                                    <input id="photos" name="photos" type="file" class="form-control">
-                                </div>
-                            </div>
-                            <div id="photos-error" class="error-message"></div>
-                            <div class="form-group">
                                 <label class="col-sm-4 control-label">Location</label>
                                 <div class="col-sm-8">
                                     <input id="location" name="location" type="text" class="form-control"
@@ -111,9 +109,16 @@
                             </div>
                             <div id="location-error" class="error-message"></div>
                             <div class="form-group">
-                                <label class="col-sm-4 control-label">Address*</label>
+                                <label class="col-sm-4 control-label">Address Line 1*</label>
                                 <div class="col-sm-8">
-                                    <input id="address" name="address" id="address" type="text" class="form-control"
+                                    <input id="address" name="address" type="text" class="form-control"
+                                           placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Address Line 2</label>
+                                <div class="col-sm-8">
+                                    <input id="address_line_2" name="address_line_2" type="text" class="form-control"
                                            placeholder="">
                                 </div>
                             </div>
@@ -160,6 +165,7 @@
                                     <input type="submit" value="Submit Property" class="btn btn-lg btn-primary">
                                 </div>
                             </div>
+                            <div id="geolocator-error" class="error-message"></div>
                         </form>
                     </div>
                 </div>

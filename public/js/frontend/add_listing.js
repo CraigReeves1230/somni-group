@@ -83,6 +83,7 @@ $(function () {
     var mls = $("#mls");
     var location = $("#location");
     var address = $("#address");
+    var address_line_2 = $("#address_line_2");
     var city = $("#city");
     var state = $("#state");
     var zip = $("#zip");
@@ -99,6 +100,7 @@ $(function () {
     var city_error = $("#city-error");
     var state_error = $("#state-error");
     var zip_error = $("#zip-error");
+    var geolocator_error = $("#geolocator-error");
     var error_messages = $(".error-message");
 
     var price_regex = /^(\d*([.,](?=\d{3}))?\d+)+((?!\2)[.,]\d\d)?$/; // numbers only. no currency sign
@@ -175,6 +177,7 @@ $(function () {
                     mls: mls.val(),
                     location: location.val(),
                     address: address.val(),
+                    address_line_2: address_line_2.val(),
                     city: city.val(),
                     state: state.val(),
                     description: description.val(),
@@ -185,8 +188,13 @@ $(function () {
                 timeout: 30000,
                 dataType: 'json'
             }).done(function (responsedata) {
-                // redirect back to home page
-                window.location.replace('/home');
+                if (responsedata.ok == true) {
+                    // redirect back to home page
+                    window.location.replace('/listings/my_listings');
+                } else {
+                    // display error message
+                    $("<div>" + responsedata.msg + "</div>").appendTo(geolocator_error);
+                }
             });
         }
     });
