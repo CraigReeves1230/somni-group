@@ -89,3 +89,21 @@ module.exports = {
     }
 };
 
+module.exports = {
+    entry: "./resources/assets/js/frontend/edit_account.js",
+    output: {
+        filename: "./public/js/frontend/edit_account.js"
+    },
+    module: {
+        loaders: [
+            {
+                exclude: /node_modules/,
+                loader: 'babel-loader',
+                query: {
+                    presets: ['es2015', 'react']
+                }
+            }
+        ]
+    }
+};
+

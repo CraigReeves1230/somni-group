@@ -72,9 +72,9 @@
                                         <li class="title">Login/Signup Pages</li>
                                         <li><a href="{{route('login_user')}}">Sign In</a></li>
                                         <li><a href="{{route('register_user')}}">Register</a></li>
-                                        <li><a href="forgot-password.html">Forgot Password</a></li>
+                                        <li><a href="{{route('password_reset')}}">Forgot Password</a></li>
                                     @else
-                                        <li><a href="#">My Account</a></li>
+                                        <li><a href="{{route('edit_account')}}">My Account</a></li>
                                         <li><a href="{{route('logout')}}">Sign Out</a></li>
                                     @endif
                                 </ul>
@@ -115,7 +115,7 @@
                     <li class="signin"><a href="{{route('login_user')}}"><span>Sign In</span></a></li>
                     <li class="register"><a href="{{route('register_user')}}"><span>Register</span></a></li>
                 @else
-                    <li><a href="#">Hi, {{Auth::user()->name}}!</a></li>
+                    <li><a href="{{route('edit_account')}}">Hi, {{Auth::user()->name}}!</a></li>
                     <li><a href="{{route('logout')}}">Sign Out</a></li>
                 @endif
             </ul>

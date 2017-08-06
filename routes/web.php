@@ -59,14 +59,21 @@ Route::group(['middlewareGroups' => 'web'], function() {
     Route::get('/listings/my_listings/{id}/photos/upload', 'ListingsController@add_photos')->name('listing_upload_photos');
 
     Route::post('/listings/my_listings/{id}/photos/upload_go', 'ListingsController@save_photos')
-        ->name('listing_upload_photos_go');
+        ->name('listing_upload_photos_go')->middleware('auth');
 
     Route::get('/listings/my_listings/{id}/photos/gallery', 'ListingsController@my_photos')
-        ->name('my_photos');
+        ->name('my_photos')->middleware('auth');
 
     Route::post('/listings/my_listings/{listing_id}/photos/{image_id}/delete', 'ListingsController@delete_photo')
-        ->name('delete_listing_photo');
+        ->name('delete_listing_photo')->middleware('auth');
 
     Route::post('/listings/my_listings/{listing_id}/photos/{image_id}/make_profile_pic', 'ListingsController@make_profile')
-        ->name('make_profile');
+        ->name('make_profile')->middleware('auth');
+
+    Route::get('/user/my_account/edit', 'UsersController@edit_account')->name('edit_account')->middleware('auth');
+
+    Route::post('/user/my_account/update', 'UsersController@update_account')->name('update_account')->middleware('auth');
+
+    Route::post('/user/my_account/update_email_validate', 'UsersController@update_email_validate')->name('update_email_validate')
+        ->middleware('auth');
 });

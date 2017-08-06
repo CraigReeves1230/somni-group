@@ -67,6 +67,26 @@ class UsersController extends Controller
         }
     }
 
+    function update_email_validate(Request $request){
+        if($request->ajax()){
+            $test_email = strtolower($request->email);
+            $user = Auth::user();
+
+            // if email is unchanged, we know that it is unique
+            if($test_email == $user->email){
+                $email_unique = true;
+            } else {
+                // test uniqueness of email if email has been changed
+                if ($this->user_repository->find_by('email', $test_email)) {
+                    $email_unique = false;
+                } else {
+                    $email_unique = true;
+                }
+            }
+            return response()->json(['email_unique' => $email_unique]);
+        }
+    }
+
     function login(Request $request){
 
         // get the email
@@ -194,4 +214,29 @@ class UsersController extends Controller
         }
     }
 
+    function edit_account(){
+
+        // get user
+        $user = Auth::user();
+        return view('frontend.user.edit_user', compact('user'));
+    }
+
+    function update_account(Request $request){
+        $user = Auth::user();
+        if ($user = $this->user_repository->update($user, $request, $this)){
+            Session::flash('success', 'Your account has been updated.');
+            if($request->ajax()){
+                return response()->json(['ok' => true]);
+            } else {
+                return redirect('/');
+            }
+        } else {
+            Session::flash('error', 'There was an error in updating your account.');
+            if($request->ajax()){
+                return response()->json(['ok' => false]);
+            } else {
+                return redirect('/');
+            }
+        }
+    }
 }
