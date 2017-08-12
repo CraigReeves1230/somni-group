@@ -123,7 +123,8 @@
                                 </div>
                                 <div id="mls-error" class="error-message"></div>
                                 <div class="form-group">
-                                    <label class="col-sm-4 control-label">Location</label>
+                                    <label class="col-sm-4 control-label">Neighborhood/Community (if
+                                        applicable)</label>
                                     <div class="col-sm-8">
                                         <input id="location" name="location" type="text" class="form-control"
                                               value="{{$listing->location}}" placeholder="">
@@ -156,8 +157,110 @@
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">State*</label>
                                     <div class="col-sm-8">
-                                        <input id="state" name="state" type="text"
-                                              value="{{$listing->address->state}}" class="form-control" placeholder="">
+                                        <select name="state" id="state" class="form-control">
+                                            <option {{$listing->address->state == 'AL' ? "selected='selected'" : ''}}
+                                                    value="AL">Alabama</option>
+                                            <option {{$listing->address->state == 'AK' ? "selected='selected'" : ''}}
+                                                    value="AK">Alaska</option>
+                                            <option {{$listing->address->state == 'AZ' ? "selected='selected'" : ''}}
+                                                    value="AZ">Arizona</option>
+                                            <option {{$listing->address->state == 'AR' ? "selected='selected'" : ''}}
+                                                    value="AR">Arkansas</option>
+                                            <option {{$listing->address->state == 'CA' ? "selected='selected'" : ''}}
+                                                    value="CA">California</option>
+                                            <option {{$listing->address->state == 'CO' ? "selected='selected'" : ''}}
+                                                    value="CO">Colorado</option>
+                                            <option {{$listing->address->state == 'CT' ? "selected='selected'" : ''}}
+                                                    value="CT">Connecticut</option>
+                                            <option {{$listing->address->state == 'DE' ? "selected='selected'" : ''}}
+                                                    value="DE">Delaware</option>
+                                            <option {{$listing->address->state == 'DC' ? "selected='selected'" : ''}}
+                                                    value="DC">District Of Columbia</option>
+                                            <option {{$listing->address->state == 'FL' ? "selected='selected'" : ''}}
+                                                    value="FL">Florida</option>
+                                            <option {{$listing->address->state == 'GA' ? "selected='selected'" : ''}}
+                                                    value="GA">Georgia</option>
+                                            <option {{$listing->address->state == 'HI' ? "selected='selected'" : ''}}
+                                                    value="HI">Hawaii</option>
+                                            <option {{$listing->address->state == 'ID' ? "selected='selected'" : ''}}
+                                                    value="ID">Idaho</option>
+                                            <option {{$listing->address->state == 'IL' ? "selected='selected'" : ''}}
+                                                    value="IL">Illinois</option>
+                                            <option {{$listing->address->state == 'IN' ? "selected='selected'" : ''}}
+                                                    value="IN">Indiana</option>
+                                            <option {{$listing->address->state == 'IA' ? "selected='selected'" : ''}}
+                                                    value="IA">Iowa</option>
+                                            <option {{$listing->address->state == 'KS' ? "selected='selected'" : ''}}
+                                                    value="KS">Kansas</option>
+                                            <option {{$listing->address->state == 'KY' ? "selected='selected'" : ''}}
+                                                    value="KY">Kentucky</option>
+                                            <option {{$listing->address->state == 'LA' ? "selected='selected'" : ''}}
+                                                    value="LA">Louisiana</option>
+                                            <option {{$listing->address->state == 'ME' ? "selected='selected'" : ''}}
+                                                    value="ME">Maine</option>
+                                            <option {{$listing->address->state == 'MD' ? "selected='selected'" : ''}}
+                                                    value="MD">Maryland</option>
+                                            <option {{$listing->address->state == 'MA' ? "selected='selected'" : ''}}
+                                                    value="MA">Massachusetts</option>
+                                            <option {{$listing->address->state == 'MI' ? "selected='selected'" : ''}}
+                                                    value="MI">Michigan</option>
+                                            <option {{$listing->address->state == 'MN' ? "selected='selected'" : ''}}
+                                                    value="MN">Minnesota</option>
+                                            <option {{$listing->address->state == 'MS' ? "selected='selected'" : ''}}
+                                                    value="MS">Mississippi</option>
+                                            <option {{$listing->address->state == 'MO' ? "selected='selected'" : ''}}
+                                                    value="MO">Missouri</option>
+                                            <option {{$listing->address->state == 'MT' ? "selected='selected'" : ''}}
+                                                    value="MT">Montana</option>
+                                            <option {{$listing->address->state == 'NE' ? "selected='selected'" : ''}}
+                                                    value="NE">Nebraska</option>
+                                            <option {{$listing->address->state == 'NV' ? "selected='selected'" : ''}}
+                                                    value="NV">Nevada</option>
+                                            <option {{$listing->address->state == 'NH' ? "selected='selected'" : ''}}
+                                                    value="NH">New Hampshire</option>
+                                            <option {{$listing->address->state == 'NJ' ? "selected='selected'" : ''}}
+                                                    value="NJ">New Jersey</option>
+                                            <option {{$listing->address->state == 'NM' ? "selected='selected'" : ''}}
+                                                    value="NM">New Mexico</option>
+                                            <option {{$listing->address->state == 'NY' ? "selected='selected'" : ''}}
+                                                    value="NY">New York</option>
+                                            <option {{$listing->address->state == 'NC' ? "selected='selected'" : ''}}
+                                                    value="NC">North Carolina</option>
+                                            <option {{$listing->address->state == 'ND' ? "selected='selected'" : ''}}
+                                                    value="ND">North Dakota</option>
+                                            <option {{$listing->address->state == 'OH' ? "selected='selected'" : ''}}
+                                                    value="OH">Ohio</option>
+                                            <option {{$listing->address->state == 'OK' ? "selected='selected'" : ''}}
+                                                    value="OK">Oklahoma</option>
+                                            <option {{$listing->address->state == 'OR' ? "selected='selected'" : ''}}
+                                                    value="OR">Oregon</option>
+                                            <option {{$listing->address->state == 'PA' ? "selected='selected'" : ''}}
+                                                    value="PA">Pennsylvania</option>
+                                            <option {{$listing->address->state == 'RI' ? "selected='selected'" : ''}}
+                                                    value="RI">Rhode Island</option>
+                                            <option {{$listing->address->state == 'SC' ? "selected='selected'" : ''}}
+                                                    value="SC">South Carolina</option>
+                                            <option {{$listing->address->state == 'SD' ? "selected='selected'" : ''}}
+                                                    value="SD">South Dakota</option>
+                                            <option {{$listing->address->state == 'TN' ? "selected='selected'" : ''}}
+                                                    value="TN">Tennessee</option>
+                                            <option {{$listing->address->state == 'TX' ? "selected='selected'" : ''}}
+                                                    value="TX">Texas</option>
+                                            <option {{$listing->address->state == 'UT' ? "selected='selected'" : ''}}
+                                                    value="UT">Utah</option>
+                                            <option {{$listing->address->state == 'VT' ? "selected='selected'" : ''}}
+                                                    value="VT">Vermont</option>
+                                            <option {{$listing->address->state == 'VA' ? "selected='selected'" : ''}}
+                                                    value="VA">Virginia</option>
+                                            <option {{$listing->address->state == 'WA' ? "selected='selected'" : ''}}
+                                                    value="WA">Washington</option>
+                                            <option {{$listing->address->state == 'WV' ? "selected='selected'" : ''}}
+                                                    value="WV">West Virginia</option>
+                                            <option {{$listing->address->state == 'WI' ? "selected='selected'" : ''}}
+                                                    value="WI">Wisconsin</option>
+                                            <option {{$listing->address->state == 'WY' ? "selected='selected'" : ''}}
+                                                    value="WY">Wyoming</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div id="state-error" class="error-message"></div>
@@ -173,7 +276,7 @@
                                     <label class="col-sm-4 control-label">Property Description</label>
                                     <div class="col-sm-8">
                                     <textarea name="description" id="description" class="form-control"
-                                              placeholder="">{{$listing->address->description}}</textarea>
+                                              placeholder="">{{$listing->description}}</textarea>
                                     </div>
                                 </div>
                                 <!-- <div class="form-group">
@@ -198,5 +301,5 @@
             </div>
         </div>
     </div>
-    <script src="/js/frontend/add_listing.js"></script>
+    <!--<script src="/js/frontend/add_listing.js"></script> -->
 @endsection

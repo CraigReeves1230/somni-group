@@ -10,30 +10,26 @@
                         <h2>Find your new home</h2>
                         <h3>Its just a few clicks away</h3>
                     </div>
-                    <form action="property_listing.html">
+
+                    <!-- search form -->
+                    <form action="{{route('listings_search')}}" method="POST">
+                        {{csrf_field()}}
                         <div class="card">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <input type="text" class="form-control input-lg" placeholder="Country, State, County, City, Zip, Title, Address, ID.">
+                                        <input type="text" name="search_field"
+                                               class="form-control input-lg"
+                                               placeholder="Country, State, County, City, Zip, Title, Address, ID."/>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <select class="form-control input-lg">
-                                                    <option>Type</option>
-                                                    <option>Residential</option>
-                                                    <option>Commercial</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <select class="form-control input-lg">
-                                                    <option>For Sale</option>
-                                                    <option>For Rent</option>
+                                                <select name="search_type" class="form-control input-lg">
+                                                    <option value="sale">For Sale</option>
+                                                    <option value="rent">For Rent</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -47,6 +43,7 @@
                             </div>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>
@@ -177,5 +174,5 @@
             });
         });
     </script>
-
+    <!-- <script src="/js/frontend/search_bar.js"></script> -->
 @endsection

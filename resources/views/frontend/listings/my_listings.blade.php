@@ -8,11 +8,15 @@
 
             <h1>My Listings</h1>
             <hr>
+            @if(Session::has('error'))
+                <div class="alert alert-danger">{{session('error')}}</div>
+            @endif
             <div class="agent-section list-group">
                 @foreach($listings as $listing)
                     <div class="row agent-row"> <!-- start section -->
                         <div class="col-lg-3 listing-profile">
 
+                            <!-- display listing image -->
                             @if(count($listing->images) > 1)
                                 @foreach($listing->images as $image)
                                     @if($image->profile)
@@ -87,6 +91,10 @@
                                 <a href="{{route('edit_listing', ['id' => $listing->id])}}"
                                    class="btn btn-primary">Edit Listing</a>
                             </div>
+                            <div class="edit-button">
+                                <a data-toggle="modal"
+                                   data-target="#deleteform-{{$listing->id}}" class="btn btn-danger">Delete Listing</a>
+                            </div>
                         </div>
                     </div> <!-- end section -->
                 @endforeach
@@ -94,4 +102,33 @@
         </div>
     </div>
 
+    <!-- modals for deleting listings -->
+    @foreach($listings as $listing)
+        <div class="modal fade" id="deleteform-{{$listing->id}}" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <h3 class="text-center">{{$listing->title}}</h3>
+                        <h4 class="text-center">Are you sure you want to delete this listing?</h4>
+                        <h5 style="color: darkred" class="text-center">Once deleted, you will <u>not</u> be able to undo
+                            this action.</h5>
+                        <div class="row">
+                            <div style="margin-top: 14px; margin-bottom: 10px;" class="col-lg-6">
+                                <form action="{{route('delete_listing', ['id' => $listing->id])}}" method="post">
+                                    {{csrf_field()}} {{method_field('delete')}}
+                                    <input type="submit" value="Yes" class="btn btn-block btn-danger">
+                                </form>
+                            </div>
+                            <div style="margin-top: 14px; margin-bottom: 10px;" class="col-lg-6">
+                                <a data-dismiss="modal" class="btn btn-block btn-primary">No</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
 @endsection

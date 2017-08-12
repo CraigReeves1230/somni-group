@@ -107,3 +107,21 @@ module.exports = {
     }
 };
 
+module.exports = {
+    entry: "./resources/assets/js/frontend/search_bar/index.js",
+    output: {
+        filename: "./public/js/frontend/search_bar.js"
+    },
+    module: {
+        loaders: [
+            {
+                exclude: /node_modules/,
+                loader: 'babel-loader',
+                query: {
+                    presets: ['es2015', 'react']
+                }
+            }
+        ]
+    }
+};
+

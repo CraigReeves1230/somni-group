@@ -6,14 +6,18 @@ namespace App\Services\Repositories;
 
 use App\Contracts\iRepository;
 use App\Listing;
+use App\Services\SearchIndex;
+use Illuminate\Support\Facades\DB;
 
 class ListingRepository implements iRepository
 {
 
     private $address_repository;
+    private $search_index;
 
-    function __construct(AddressRepository $address_repository){
+    function __construct(AddressRepository $address_repository, SearchIndex $search_index){
         $this->address_repository = $address_repository;
+        $this->search_index = $search_index;
     }
 
     function store($data, $controller = null)
@@ -31,7 +35,6 @@ class ListingRepository implements iRepository
                 'city' => 'required',
                 'state' => 'required',
                 'zip' => 'required',
-                'description' => 'max:255'
             ]);
         }
 
@@ -56,6 +59,9 @@ class ListingRepository implements iRepository
             $listing->address()->associate($address);
             $this->save($listing);
 
+            // save to search index
+            $this->search_index->add_listing($listing);
+
             return $listing;
         } else {
             return false;
@@ -77,7 +83,6 @@ class ListingRepository implements iRepository
                 'city' => 'required',
                 'state' => 'required',
                 'zip' => 'required',
-                'description' => 'max:255'
             ]);
         }
 
@@ -101,6 +106,9 @@ class ListingRepository implements iRepository
             $listing->description = $data->description;
             $this->save($listing);
 
+            // update search index
+            $this->search_index->update_listing($listing);
+
             return $listing;
         } else {
             return false;
@@ -123,6 +131,24 @@ class ListingRepository implements iRepository
     }
 
     function delete($listing){
-        $listing->delete();
+
+        // Delete all associated items with listing
+        DB::transaction(function() use ($listing) {
+            foreach($listing->images as $image){
+                if($image->path != '/img/generichouse.png') {
+                    unlink("../public{$image->path}");
+                }
+            }
+            $listing->images()->delete();
+            $listing->address->location()->delete();
+            $listing->address()->delete();
+
+            // delete from search index
+            $this->search_index->remove_listing($listing);
+
+            // delete listing
+            $listing->delete();
+        });
+
     }
 }

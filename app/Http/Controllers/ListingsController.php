@@ -14,10 +14,12 @@ class ListingsController extends Controller
 {
     private $listing_repository;
     private $listing_gateway;
+    private $solr_client;
 
     function __construct(ListingRepository $listing_repository, ListingGateway $listing_gateway){
         $this->listing_repository = $listing_repository;
         $this->listing_gateway = $listing_gateway;
+        $this->solr_client = app('solr_listings');
     }
 
     function create(){
@@ -192,6 +194,57 @@ class ListingsController extends Controller
         } else {
             Session::flash('error', 'You do not have permission to change this listing.');
             return redirect('/');
+        }
+    }
+
+    function search(Request $request){
+
+        // create the search query by removing spaces and punctuation
+        $search_query = str_replace(" ", "+", $request->search_field);
+        $search_query = str_replace(",", "", $search_query);
+
+        $search_type = $request->search_type;
+
+        return redirect()->route('search_results', ['search_query' => $search_query, 'search_type' => $search_type]);
+    }
+
+    function search_results($search_query, $search_type){
+
+        // format search query
+        $search_query = str_replace("+", " ", $search_query);
+
+        // set up query
+        $client = $this->solr_client;
+        $query = $client->createSelect();
+
+        $statement = "address:{$search_query} AND type:{$search_type} 
+        OR location:{$search_query} OR city:{$search_query}
+        OR zip:{$search_query} OR title:{$search_query}";
+
+        // set query and get search results
+        $query->createFilterQuery('type')->setQuery($statement);
+        $resultset = $client->select($query);
+
+        // store all search results in array
+        $listings = [];
+        foreach($resultset as $result){
+            $listing = $this->listing_repository->find($result->id);
+            array_push($listings, $listing);
+        }
+
+        return view('frontend.listings.search_results', compact('search_query', 'listings'));
+    }
+
+    function delete_listing($id){
+        $listing = $this->listing_repository->find($id);
+
+        if($this->listing_gateway->enact(Auth::user(), $listing)){
+            // delete listing
+            $this->listing_repository->delete($listing);
+            return redirect()->back();
+        } else {
+            Session::flash('error', 'You do not have permission to delete this listing.');
+            return redirect()->back();
         }
     }
 }

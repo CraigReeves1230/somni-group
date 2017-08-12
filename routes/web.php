@@ -76,4 +76,12 @@ Route::group(['middlewareGroups' => 'web'], function() {
 
     Route::post('/user/my_account/update_email_validate', 'UsersController@update_email_validate')->name('update_email_validate')
         ->middleware('auth');
+
+    Route::post('/listings/search', 'ListingsController@search')->name('listings_search')
+        ->middleware('auth');
+
+    Route::get('listings/search/search_result/{search_query}&type={search_type}', 'ListingsController@search_results')
+        ->name('search_results');
+
+    Route::delete('listings/{id}/delete', 'ListingsController@delete_listing')->name('delete_listing')->middleware('auth');
 });
