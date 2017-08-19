@@ -1,0 +1,35 @@
+- Implement dropdown replacing 'more' with more services: Inspections, Maintenance, Development etc.
+
+- Add phone number(required) and DOB(optional) to user table. MLS can be optional. It isn't required.
+
+- To sign up as an agent, there is a monthly charge. There are different packages and the price varies.
+
+- Agents can be given ratings and given reviews.
+
+- Agent info needed:
+Name
+Address
+Phone Number
+Bio
+Website 
+Social Media
+Specialties
+Licenses
+
+- Listings are either uploaded and approved or pulled from FMLS once a day. There will have to be a 'type' column to differentiate them
+
+- Admin tool right when you visit will let you know if there are any new listings that need approval.
+
+- Once the listing is approved, it will be sent over to FMLS
+
+- Have it to where the photos can be arranged in the photo gallery by dragging and dropping.
+
+
+
+
+
+
+
+
+
+  

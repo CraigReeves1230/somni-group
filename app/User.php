@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'dob'
     ];
 
     /**
@@ -30,6 +30,11 @@ class User extends Authenticatable
     // gets the listings for a user
     function listings(){
         return $this->hasMany('App\Listing');
+    }
+
+    // returns the phone number for user
+    function phone_number(){
+        return $this->belongsTo('App\PhoneNumber');
     }
 
 }

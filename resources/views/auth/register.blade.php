@@ -13,6 +13,16 @@
                     <h1 class="page-header">Please sign in or register</h1>
                 </div>
             </div>
+            <!-- Display errors -->
+            @if(count($errors) > 0)
+                <div class="alert alert-danger" style="margin-top: 10px;">
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>{{$error}}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="row">
                 <div class="col-md-5 col-md-offset-1">
                     <ul class="nav nav-tabs tab-lg" role="tablist">
@@ -54,6 +64,27 @@
                                     <div id="password-confirm-error"
                                          class="error-message"><!-- filled by javascript automatically --></div>
                                 </div>
+                                <div class="form-group">
+                                    <label>Phone Number</label>
+                                    <div class="row">
+                                        <div style="padding-right: 4px;" class="col-lg-3">
+                                            <input id="area-code" name="area-code" type="text"
+                                                   class="form-control
+                                            input-lg">
+                                        </div>
+                                        <div style="padding-left: 4px;" class="col-lg-9">
+                                            <input id="phone-number" name="phone-number" type="text"
+                                                   class="form-control
+                                            input-lg">
+                                        </div>
+                                    </div>
+                                    <div id="phone-number-error"
+                                         class="error-message"><!-- filled by javascript automatically --></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="dob">Date of Birth</label>
+                                    <input type="date" class="form-control" name="dob" id="dob">
+                                </div>
                                 <div class="checkbox">
                                     <label>
                                         <input id="checkbox" name="checkbox" type="checkbox">
@@ -76,5 +107,5 @@
             </div>
         </div>
     </div>
-    <script src="/js/auth/register_form.js"></script>
+    <script src="/js/bundle.js"></script>
 @endsection

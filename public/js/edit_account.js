@@ -70,7 +70,6 @@
 "use strict";
 
 
-// handles user registration
 $(function () {
 
     // get form variables
@@ -79,12 +78,14 @@ $(function () {
     var email = $("#email");
     var password = $("#password");
     var password_confirm = $("#password-confirm");
-    var checkbox = $("#checkbox");
+    var dob = $("#dob");
+    var area_code = $("#area_code");
+    var phone_number = $("#phone_number");
     var name_error = $("#name-error");
     var email_error = $("#email-error");
     var password_error = $("#password-error");
     var password_confirm_error = $("#password-confirm-error");
-    var checkbox_error = $("#checkbox-error");
+    var phone_number_error = $("#phone-number-error");
     var error_messages = $(".error-message");
 
     // regular expressions for validation
@@ -119,26 +120,38 @@ $(function () {
         }
 
         // make sure password is formatted properly
-        if (!reg_ex_password.test(password.val())) {
-            $("<div>Password must be at least 7 characters and include 1 digit. No special characters or" + " spaces.</div>").appendTo(password_error);
-            form_ok = false;
+        if (password.val() !== '') {
+            if (!reg_ex_password.test(password.val())) {
+                $("<div>Password must be at least 7 characters and include 1 digit. No special characters or" + " spaces.</div>").appendTo(password_error);
+                form_ok = false;
+            }
         }
 
         // make sure password confirmation is formatted properly
-        if (password_confirm.val() !== password.val()) {
-            $("<div>Password confirmation and Password do not match</div>").appendTo(password_confirm_error);
-            form_ok = false;
+        if (password.val() !== '') {
+            if (password_confirm.val() !== password.val()) {
+                $("<div>Password confirmation and Password do not match</div>").appendTo(password_confirm_error);
+                form_ok = false;
+            }
         }
 
-        // make sure that checkbox is checked
-        if (!checkbox.prop('checked')) {
-            $("<div>Checkbox must be checked</div>").appendTo(checkbox_error);
+        // make sure area code exists
+        if(area_code.val() == ''){
+            $("<div>Phone number must have area code</div>").appendTo(phone_number_error);
             form_ok = false;
+
         }
 
-        // if form is ok check if email is unique. If so, submit the form and redirect
+        // make sure phone number exists
+        if(phone_number.val() == ''){
+            $("<div>Phone number is required</div>").appendTo(phone_number_error);
+            form_ok = false;
+
+        }
+
+        // verify email
         if (form_ok) {
-            $.ajax({
+            jQuery.ajax({
                 url: form.data("email-validate"),
                 type: "POST",
                 data: { email: email.val().toLowerCase() },
@@ -146,31 +159,29 @@ $(function () {
                 async: true,
                 timeout: 30000,
                 dataType: 'json'
-            }).done(function (responsedata) {
-                var email_unique = responsedata.email_unique;
-                if (email_unique == false) {
+            }).done(function (dataresult) {
+                if (dataresult.email_unique == false) {
                     $("<div>An account with this email address already exists</div>").appendTo(email_error);
                 } else {
-                    $.ajax({
+                    // submit form
+                    jQuery.ajax({
                         url: form.attr('action'),
                         type: "POST",
                         data: {
                             name: name.val(),
                             email: email.val(),
                             password: password.val(),
-                            checkbox: checkbox.prop('checked'),
                             password_confirmation: password_confirm.val(),
-                            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-                            async: true,
-                            timeout: 30000,
-                            dataType: 'json'
+                            dob: dob.val(),
+                            area_code: area_code.val(),
+                            phone_number: phone_number.val()
                         },
                         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                         async: true,
                         timeout: 30000,
                         dataType: 'json'
-                    }).done(function () {
-                        // redirect back to home page
+                    }).done(function (responsedata) {
+                        // back to home
                         window.location.replace('/home');
                     });
                 }

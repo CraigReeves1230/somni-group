@@ -61,6 +61,27 @@
                                 <div id="password-confirm-error"
                                      class="error-message"><!-- filled by javascript automatically --></div>
                             </div>
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <div class="row">
+                                    <div style="padding-right: 4px;" class="col-lg-3">
+                                        <input id="area_code" name="area_code" type="text"
+                                               class="form-control
+                                            input-lg" value="{{$user->phone_number->area_code}}">
+                                    </div>
+                                    <div style="padding-left: 4px;" class="col-lg-9">
+                                        <input id="phone_number" name="phone_number" type="text"
+                                               class="form-control
+                                            input-lg" value="{{$phone_number}}">
+                                    </div>
+                                </div>
+                                <div id="phone-number-error"
+                                     class="error-message"><!-- filled by javascript automatically --></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="dob">Date of Birth</label>
+                                <input value="{{$user->dob}}" type="date" class="form-control" name="dob" id="dob">
+                            </div>
                             <button id="submit" type="submit" class="btn btn-primary btn-lg">Update Account</button>
                         </form>
                     <div></div>
@@ -74,5 +95,5 @@
             </div>
         </div>
     </div>
-    <script src="/js/frontend/edit_account.js"></script>
+    <script src="/js/edit_account.js"></script>
 @endsection

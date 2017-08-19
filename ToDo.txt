@@ -1,0 +1,4 @@
+Pull listing data from FMLS database daily and add listings to database
+Data is sent to the FMLS database once it is approved
+
+

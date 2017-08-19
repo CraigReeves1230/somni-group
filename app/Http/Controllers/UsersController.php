@@ -218,7 +218,12 @@ class UsersController extends Controller
 
         // get user
         $user = Auth::user();
-        return view('frontend.user.edit_user', compact('user'));
+
+        // make phone number pretty
+        $phone_number = $user->phone_number->number;
+        $phone_number = substr_replace($phone_number, '-', 3, 0);
+
+        return view('frontend.user.edit_user', compact('user', 'phone_number'));
     }
 
     function update_account(Request $request){

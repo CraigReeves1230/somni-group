@@ -40,11 +40,13 @@
                                     <h2>{{$listing->title}}</h2>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-lg-12 mls-number">
-                                    MLS No. {{$listing->mls}}
+                            @if($listing->mls)
+                                <div class="row">
+                                    <div class="col-lg-12 mls-number">
+                                            MLS No. {{$listing->mls}}
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
                             <div class="row">
                                 <div class="col-lg-12 address-and-info">
                                     {{$listing->address->line_1}}<br>

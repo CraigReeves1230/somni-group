@@ -115,7 +115,7 @@
                                 </div>
                                 <div id="area-error" class="error-message"></div>
                                 <div class="form-group">
-                                    <label class="col-sm-4 control-label">MLS No.*</label>
+                                    <label class="col-sm-4 control-label">MLS No. (if available)</label>
                                     <div class="col-sm-8">
                                         <input id="mls" name="mls" type="text" class="form-control"
                                               value="{{$listing->mls}}" placeholder="">
@@ -301,5 +301,5 @@
             </div>
         </div>
     </div>
-    <!--<script src="/js/frontend/add_listing.js"></script> -->
+    <script src="/js/bundle.js"></script>
 @endsection

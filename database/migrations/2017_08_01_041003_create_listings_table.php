@@ -22,7 +22,7 @@ class CreateListingsTable extends Migration
             $table->integer('bedrooms');
             $table->integer('bathrooms');
             $table->double('area')->nullable();
-            $table->string('mls');
+            $table->string('mls')->nullable();
             $table->string('location')->nullable();
             $table->integer('address_id')->index();
             $table->text('description')->nullable();

@@ -174,5 +174,4 @@
             });
         });
     </script>
-    <!-- <script src="/js/frontend/search_bar.js"></script> -->
 @endsection

@@ -8,11 +8,15 @@ $(function(){
     const email = $("#email");
     const password = $("#password");
     const password_confirm = $("#password-confirm");
+    const area_code = $("#area-code");
+    const phone_number = $("#phone-number");
+    const dob = $("#dob");
     const checkbox = $("#checkbox");
     const name_error = $("#name-error");
     const email_error = $("#email-error");
     const password_error = $("#password-error");
     const password_confirm_error = $("#password-confirm-error");
+    const phone_number_error = $("#phone-number-error");
     const checkbox_error = $("#checkbox-error");
     const error_messages = $(".error-message");
 
@@ -59,6 +63,18 @@ $(function(){
             form_ok = false;
         }
 
+        // make sure area code exists
+        if(area_code.val() == ''){
+            $("<div>Phone number must have area code</div>").appendTo(phone_number_error);
+            form_ok = false;
+        }
+
+        // make sure phone number exists
+        if(phone_number.val() == ''){
+            $("<div>Phone number is required</div>").appendTo(phone_number_error);
+            form_ok = false;
+        }
+
         // make sure that checkbox is checked
         if(!checkbox.prop('checked')){
             $("<div>Checkbox must be checked</div>").appendTo(checkbox_error);
@@ -87,12 +103,11 @@ $(function(){
                             name: name.val(),
                             email: email.val(),
                             password: password.val(),
+                            dob: dob.val(),
                             checkbox: checkbox.prop('checked'),
                             password_confirmation: password_confirm.val(),
-                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                            async: true,
-                            timeout: 30000,
-                            dataType: 'json'
+                            area_code: area_code.val(),
+                            phone_number: phone_number.val()
                         },
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         async: true,

@@ -85,5 +85,5 @@
         </div>
     </div>
 </div>
-<script src="/js/auth/password_reset.js"></script>
+<script src="/js/bundle.js"></script>
 @endsection

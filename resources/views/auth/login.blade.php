@@ -58,6 +58,6 @@
             </div>
         </div>
     </div>
-    <script src="/js/auth/login_form.js"></script>
+    <script src="/js/bundle.js"></script>
 
 @endsection

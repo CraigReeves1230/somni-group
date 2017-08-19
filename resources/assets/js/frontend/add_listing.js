@@ -66,11 +66,6 @@ $(function(){
             $("<div>Area must be a number. No commas</div>").appendTo(area_error);
         }
 
-        if(mls.val() == ''){
-            form_ok = false;
-            $("<div>MLS is required</div>").appendTo(mls_error);
-        }
-
         if(address.val() == ''){
             form_ok = false;
             $("<div>Address is required</div>").appendTo(address_error);
