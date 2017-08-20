@@ -12,7 +12,7 @@ class LocationRepository implements iRepository
 {
 
     // returns the geolocater url API
-    public function api_url($line_1, $postal_code){
+    private function api_url($line_1, $postal_code){
 
         //get google maps API url
         $api_key = 'AIzaSyA-ZpyK3mtJuhML4IRtelZde-0f3jF8I6U';

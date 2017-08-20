@@ -236,6 +236,7 @@
                                     </div>
                                 @endforeach
                             </div>
+                            {{$listings->links()}}
                         </div>
                     </div>
                 </div>

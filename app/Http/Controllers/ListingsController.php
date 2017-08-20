@@ -4,17 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Image;
 use App\Services\Gateways\ListingGateway;
+use App\Services\GeoLocator;
 use App\Services\Repositories\ImageRepository;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use App\Services\Repositories\ListingRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ListingsController extends Controller
 {
-    private $listing_repository;
     private $listing_gateway;
     private $solr_client;
+
 
     function __construct(ListingRepository $listing_repository, ListingGateway $listing_gateway){
         $this->listing_repository = $listing_repository;
@@ -203,34 +206,60 @@ class ListingsController extends Controller
         $search_query = str_replace(" ", "+", $request->search_field);
         $search_query = str_replace(",", "", $search_query);
 
+        // don't allow user to not put something in
+        if($search_query == ""){
+            return redirect()->back();
+        }
+
         $search_type = $request->search_type;
 
         return redirect()->route('search_results', ['search_query' => $search_query, 'search_type' => $search_type]);
     }
 
-    function search_results($search_query, $search_type){
+    function search_results($search_query, $search_type, GeoLocator $geo_locator){
 
         // format search query
         $search_query = str_replace("+", " ", $search_query);
 
         // set up query
+        $location = $geo_locator->convert($search_query);
         $client = $this->solr_client;
         $query = $client->createSelect();
+        $helper = $query->getHelper();
 
-        $statement = "address:{$search_query} AND type:{$search_type} 
-        OR location:{$search_query} OR city:{$search_query}
-        OR zip:{$search_query} OR title:{$search_query}";
+        $latitude = $location['latitude'];
+        $longitude = $location['longitude'];
+        $distance = 50;  // search within 50 miles
+
+        $statement = "type:{$search_type}";
 
         // set query and get search results
         $query->createFilterQuery('type')->setQuery($statement);
+
+        $query->createFilterQuery('distance')->setQuery(
+            $helper->geofilt(
+                'latlon',
+                doubleval($latitude),
+                doubleval($longitude),
+                doubleval($distance * 1.609344))
+        );
+
         $resultset = $client->select($query);
 
         // store all search results in array
-        $listings = [];
+        $listings_array = [];
         foreach($resultset as $result){
             $listing = $this->listing_repository->find($result->id);
-            array_push($listings, $listing);
+            array_push($listings_array, $listing);
         }
+
+        // paginate array
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+        $col = new Collection($listings_array);
+        $perPage = 10;
+        $currentPageSearchResults = $col->slice(($currentPage - 1) * $perPage, $perPage)->all();
+        $listings = new LengthAwarePaginator($currentPageSearchResults, count($col), $perPage);
+        $listings->setPath(route('search_results', ['search_query' => $search_query, 'search_type' => $search_type]));
 
         return view('frontend.listings.search_results', compact('search_query', 'listings'));
     }

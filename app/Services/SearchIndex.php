@@ -34,7 +34,7 @@ class SearchIndex
         $doc->city = $listing->address->city;
         $doc->state = $listing->address->state;
         $doc->zip = $listing->address->zip;
-        $doc->coords = "{$listing->address->location->latitude}, {$listing->address->location->longitude}";
+        $doc->latlon = doubleval($listing->address->location->latitude) . "," . doubleval($listing->address->location->longitude);
         $update->addDocuments([$doc]);
         $update->addCommit();
         $this->solr_listings->update($update);
