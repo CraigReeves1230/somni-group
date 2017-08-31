@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Image;
+use App\PhoneNumber;
 use App\Services\Gateways\ListingGateway;
 use App\Services\GeoLocator;
+use App\Services\Repositories\AddressRepository;
 use App\Services\Repositories\ImageRepository;
+use App\Services\Repositories\UserRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use App\Services\Repositories\ListingRepository;
@@ -16,12 +19,18 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class ListingsController extends Controller
 {
     private $listing_gateway;
+    private $user_repository;
+    private $address_repository;
     private $solr_client;
 
 
-    function __construct(ListingRepository $listing_repository, ListingGateway $listing_gateway){
+    function __construct(ListingRepository $listing_repository,
+                         ListingGateway $listing_gateway,
+                         UserRepository $user_repository, AddressRepository $address_repository){
         $this->listing_repository = $listing_repository;
         $this->listing_gateway = $listing_gateway;
+        $this->user_repository = $user_repository;
+        $this->address_repository = $address_repository;
         $this->solr_client = app('solr_listings');
     }
 
@@ -37,6 +46,8 @@ class ListingsController extends Controller
             // create generic profile for listing
             $image = new Image(['path' => 'generichouse.png']);
             $listing->images()->save($image);
+            $image->profile_image = 'generichouse.png';
+            $image->profile_image_id = $listing->images[0]->id;
 
             if ($request->ajax()) {
                 return response()->json(['ok' => true]);
@@ -142,8 +153,9 @@ class ListingsController extends Controller
 
             // if there aren't any other images, by default, make it the profile
             if(count($listing->images) < 3){
-                $image->profile = true;
                 $image_repository->save($image);
+                $listing->profile_image = $image->path;
+                $this->listing_repository->save($listing);
             }
 
         } else {
@@ -183,20 +195,44 @@ class ListingsController extends Controller
 
         if($this->listing_gateway->enact($user, $listing)){
 
-            // falsify all other images
-            foreach($listing->images as $image){
-                $image->profile = false;
-                $image_repository->save($image);
-            }
-
             // make selected image the profile
-            $orig_image->profile = true;
-            $image_repository->save($orig_image);
-
+            $listing->profile_image = $orig_image->path;
+            $this->listing_repository->save($listing);
             return redirect()->route('my_listings');
         } else {
             Session::flash('error', 'You do not have permission to change this listing.');
             return redirect('/');
+        }
+    }
+
+    function getAllDataFromListingResults(Request $request){
+        if($request->ajax()){
+            $listings = $request->listings;
+            $users = [];
+            $addresses = [];
+            $created_ats = [];
+            $phone_numbers = [];
+            $coords = [];
+            foreach($listings as $listing){
+                $created_at = $this->listing_repository->find($listing['id'])->created_at->diffForHumans();
+                $user = $this->user_repository->find($listing['user_id']);
+                $address = $this->address_repository->find($listing['address_id']);
+                $phone = $user->phone_number;
+                $phone_number = "({$phone->area_code}) " . substr_replace($phone->number, '-', 3, 0);
+                $point = $address->location;
+                array_push($addresses, $address);
+                array_push($users, $user);
+                array_push($created_ats, $created_at);
+                array_push($phone_numbers, $phone_number);
+                array_push($coords, $point);
+            }
+            return response()->json([
+                'addresses' => $addresses,
+                'users' => $users,
+                'created_ats' => $created_ats,
+                'phone_numbers' => $phone_numbers,
+                'coords' => $coords
+            ]);
         }
     }
 
@@ -213,7 +249,13 @@ class ListingsController extends Controller
 
         $search_type = $request->search_type;
 
-        return redirect()->route('search_results', ['search_query' => $search_query, 'search_type' => $search_type]);
+        if($request->ajax()){
+            return response()->json(['search_results_link' => route('search_results', ['search_query' =>
+                $search_query, 'search_type' => $search_type]), 'search_type' => $search_type]);
+        } else {
+            return redirect()->route('search_results', ['search_query' => $search_query,
+                'search_type' => $search_type]);
+        }
     }
 
     function search_results($search_query, $search_type, GeoLocator $geo_locator){
@@ -245,23 +287,15 @@ class ListingsController extends Controller
         );
 
         $resultset = $client->select($query);
-
         // store all search results in array
         $listings_array = [];
         foreach($resultset as $result){
             $listing = $this->listing_repository->find($result->id);
             array_push($listings_array, $listing);
         }
+        $listings = $listings_array;
 
-        // paginate array
-        $currentPage = LengthAwarePaginator::resolveCurrentPage();
-        $col = new Collection($listings_array);
-        $perPage = 10;
-        $currentPageSearchResults = $col->slice(($currentPage - 1) * $perPage, $perPage)->all();
-        $listings = new LengthAwarePaginator($currentPageSearchResults, count($col), $perPage);
-        $listings->setPath(route('search_results', ['search_query' => $search_query, 'search_type' => $search_type]));
-
-        return view('frontend.listings.search_results', compact('search_query', 'listings'));
+        return view('frontend.listings.search_results', compact('search_query', 'listings', 'search_type'));
     }
 
     function delete_listing($id){

@@ -68,7 +68,7 @@ class AddressRepository implements iRepository
 
     function find($id)
     {
-        // TODO: Implement find() method.
+        return Address::find($id);
     }
 
     function find_by($criteria, $in_var)

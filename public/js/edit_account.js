@@ -78,14 +78,10 @@ $(function () {
     var email = $("#email");
     var password = $("#password");
     var password_confirm = $("#password-confirm");
-    var dob = $("#dob");
-    var area_code = $("#area_code");
-    var phone_number = $("#phone_number");
     var name_error = $("#name-error");
     var email_error = $("#email-error");
     var password_error = $("#password-error");
     var password_confirm_error = $("#password-confirm-error");
-    var phone_number_error = $("#phone-number-error");
     var error_messages = $(".error-message");
 
     // regular expressions for validation
@@ -135,20 +131,6 @@ $(function () {
             }
         }
 
-        // make sure area code exists
-        if(area_code.val() == ''){
-            $("<div>Phone number must have area code</div>").appendTo(phone_number_error);
-            form_ok = false;
-
-        }
-
-        // make sure phone number exists
-        if(phone_number.val() == ''){
-            $("<div>Phone number is required</div>").appendTo(phone_number_error);
-            form_ok = false;
-
-        }
-
         // verify email
         if (form_ok) {
             jQuery.ajax({
@@ -171,10 +153,7 @@ $(function () {
                             name: name.val(),
                             email: email.val(),
                             password: password.val(),
-                            password_confirmation: password_confirm.val(),
-                            dob: dob.val(),
-                            area_code: area_code.val(),
-                            phone_number: phone_number.val()
+                            password_confirmation: password_confirm.val()
                         },
                         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                         async: true,

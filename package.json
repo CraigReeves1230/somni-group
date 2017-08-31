@@ -28,8 +28,10 @@
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "style-loader": "^0.18.2",
+    "underscore": "^1.8.3",
     "vue": "^2.1.10",
-    "webpack": "^3.4.1"
+    "webpack": "^3.4.1",
+    "webpack-stream": "^4.0.0"
   },
   "name": "somni-group",
   "description": "<p align=\"center\"><img src=\"https://laravel.com/assets/img/components/logo-laravel.svg\"></p>",

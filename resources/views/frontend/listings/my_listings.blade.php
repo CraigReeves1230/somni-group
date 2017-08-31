@@ -17,18 +17,8 @@
                         <div class="col-lg-3 listing-profile">
 
                             <!-- display listing image -->
-                            @if(count($listing->images) > 1)
-                                @foreach($listing->images as $image)
-                                    @if($image->profile)
-                                        <img class="img-fluid profile"
-                                             height="200" src="{{$image->path}}" alt="">
-                                    @endif
-                                @endforeach
-                            @endif
-
-                            @if(count($listing->images) < 2)
-                                <img class="img-fluid profile" height="200" src="{{$listing->images[0]->path}}" alt="">
-                            @endif
+                            <img class="img-fluid profile"
+                                 height="200" src="/img/{{$listing->profile_image}}" alt="">
 
                             <div class="add-photo-link"><a
                                 href="{{route('listing_upload_photos', ['id' => $listing->id])}}">Add/Edit
