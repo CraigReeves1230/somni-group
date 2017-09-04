@@ -173,10 +173,10 @@ $(function () {
             form_ok = false;
         }
 
-        // verify email
+        // verify email and physical address
         if (form_ok) {
             jQuery.ajax({
-                url: form.data("email-validate"),
+                url: form.data("email-address-validate"),
                 type: "POST",
                 data: {
                     email: email.val().toLowerCase(),

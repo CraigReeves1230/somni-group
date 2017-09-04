@@ -28,7 +28,7 @@
                         <li role="presentation" class="active"><a href="{{route('login')}}">Update Account</a></li>
                         <li role="presentation"><a href="{{route('register_user')}}">Sign Up As Agent</a></li>
                     </ul>
-                        <form data-email-validate="{{route('update_email_validate')}}" id="regform"
+                        <form data-email-address-validate="{{route('update_email_and_address_validate')}}" id="regform"
                               action="{{route('update_account')}}"
                               method="POST">
                             {{ csrf_field() }}

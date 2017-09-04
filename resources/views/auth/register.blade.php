@@ -31,7 +31,7 @@
                     </ul>
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" id="register">
-                            <form data-email-validate="{{route('email_validate')}}" id="regform"
+                            <form data-email-address-validate="{{route('email_and_address_validate')}}" id="regform"
                                   action="{{route('register_user')}}"
                                   method="POST">
                                 {{ csrf_field() }}

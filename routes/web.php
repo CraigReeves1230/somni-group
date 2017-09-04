@@ -43,7 +43,7 @@ Route::group(['middlewareGroups' => 'web'], function() {
     Route::post('/password_reset/do/{token}/{id}', 'UsersController@password_reset')->name('password_reset_do')
         ->middleware('guest');
 
-    Route::post('/user/email_validate', 'UsersController@email_validate')->name('email_validate');
+    Route::post('/user/email_and_address_validate', 'UsersController@email_and_address_validate')->name('email_and_address_validate');
 
     Route::get('/listings/add_listing', 'ListingsController@create')->name('add_listing')->middleware('auth');
 
@@ -74,7 +74,8 @@ Route::group(['middlewareGroups' => 'web'], function() {
 
     Route::post('/user/my_account/update', 'UsersController@update_account')->name('update_account')->middleware('auth');
 
-    Route::post('/user/my_account/update_email_validate', 'UsersController@update_email_validate')->name('update_email_validate')
+    Route::post('/user/my_account/update_email_and_address_validate', 'UsersController@update_email_and_address_validate')->name
+    ('update_email_and_address_validate')
         ->middleware('auth');
 
     Route::post('/listings/search', 'ListingsController@search')->name('listings_search');

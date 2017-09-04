@@ -86,7 +86,7 @@ class UsersController extends Controller
         return view('auth.login');
     }
 
-    function email_validate(Request $request){
+    function email_and_address_validate(Request $request){
         if($request->ajax()){
             $test_email = strtolower($request->email);
             if($this->user_repository->find_by('email', $test_email)){
@@ -102,7 +102,7 @@ class UsersController extends Controller
         }
     }
 
-    function update_email_validate(Request $request){
+    function update_email_and_address_validate(Request $request){
         if($request->ajax()){
             $test_email = strtolower($request->email);
             $user = Auth::user();

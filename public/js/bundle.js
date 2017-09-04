@@ -10138,7 +10138,7 @@ $(function () {
         // if form is ok check if email is unique and that the address is real. If so, submit the form and redirect
         if (form_ok) {
             $.ajax({
-                url: form.data("email-validate"),
+                url: form.data("email-address-validate"),
                 type: "POST",
                 data: {
                     email: email.val().toLowerCase(),
