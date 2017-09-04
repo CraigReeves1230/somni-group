@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePhoneNumbersTable extends Migration
+class AddAddressToUser extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreatePhoneNumbersTable extends Migration
      */
     public function up()
     {
-        Schema::create('phone_numbers', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('area_code');
-            $table->string('number');
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->integer('address_id')->nullable();
         });
     }
 
@@ -28,6 +25,8 @@ class CreatePhoneNumbersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('phone_numbers');
+        Schema::table('users', function (Blueprint $table) {
+            $table->removeColumn('address_id');
+        });
     }
 }

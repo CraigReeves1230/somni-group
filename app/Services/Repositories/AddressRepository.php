@@ -20,11 +20,11 @@ class AddressRepository implements iRepository
 
         // create new address
         $address = new Address([
-            'line_1' => $data->address,
-            'line_2' => $data->address_line_2,
-            'city' => $data->city,
-            'state' => $data->state,
-            'zip' => $data->zip
+            'line_1' => $data['address_line_1'],
+            'line_2' => $data['address_line_2'],
+            'city' => $data['city'],
+            'state' => $data['state'],
+            'zip' => $data['zip']
         ]);
 
         if($location = $this->location_repository->store($data)) {
@@ -45,16 +45,16 @@ class AddressRepository implements iRepository
         $location = $address->location;
         if($this->location_repository->update($location, $data)){
 
-        // update address
-
-            $address->line_1 = $data->address;
+            // update address
+            $address->line_1 = $data->address_line_1;
             $address->line_2 = $data->address_line_2;
             $address->city = $data->city;
             $address->state = $data->state;
             $address->zip = $data->zip;
 
             // save data
-            $this->save($address);
+            $address->update();
+
             return $address;
         } else {
             return false;
@@ -76,8 +76,12 @@ class AddressRepository implements iRepository
         // TODO: Implement find_by() method.
     }
 
-    function delete($deleteable)
+    function delete($address)
     {
-        // TODO: Implement delete() method.
+        // first, delete the location for the address
+        $this->location_repository->delete($address->location);
+
+        // delete address
+        $address->delete();
     }
 }

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Address;
 use App\Services\Mailer;
+use App\Services\Repositories\AddressRepository;
 use App\Services\Repositories\UserRepository;
 use App\Services\TokenMaker;
 use App\User;
@@ -16,10 +18,13 @@ class UsersController extends Controller
 {
     private $token_service;
     private $user_repository;
+    private $address_repository;
 
-    function __construct(TokenMaker $token_service, UserRepository $user_repository){
+    function __construct(TokenMaker $token_service, UserRepository $user_repository, AddressRepository
+    $address_repository){
         $this->token_service = $token_service;
         $this->user_repository = $user_repository;
+        $this->address_repository = $address_repository;
     }
 
     // go to form to create a user
@@ -219,16 +224,24 @@ class UsersController extends Controller
         // get user
         $user = Auth::user();
 
+        // get the user's address
+        if($user->address !== null) {
+            $address = $user->address;
+        } else {
+            $address = new Address();
+        }
+
         // make phone number pretty
         $phone_number = $user->phone_number->number;
         $phone_number = substr_replace($phone_number, '-', 3, 0);
 
-        return view('frontend.user.edit_user', compact('user', 'phone_number'));
+        return view('frontend.user.edit_user', compact('user', 'phone_number', 'address'));
     }
 
     function update_account(Request $request){
         $user = Auth::user();
         if ($user = $this->user_repository->update($user, $request, $this)){
+
             Session::flash('success', 'Your account has been updated.');
             if($request->ajax()){
                 return response()->json(['ok' => true]);
@@ -243,5 +256,6 @@ class UsersController extends Controller
                 return redirect('/');
             }
         }
+
     }
 }

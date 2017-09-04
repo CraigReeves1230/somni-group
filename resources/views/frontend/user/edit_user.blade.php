@@ -82,6 +82,140 @@
                                 <label for="dob">Date of Birth</label>
                                 <input value="{{$user->dob}}" type="date" class="form-control" name="dob" id="dob">
                             </div>
+                            <div class="form-group">
+                                <label for="address">Address Line 1</label>
+                                <input value="{{$address->line_1}}" type="text" class="form-control"
+                                       name="address_line_1"
+                                       id="address_line_1">
+                                <div id="address_error"
+                                     class="error-message"><!-- filled by javascript automatically --></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="address_line_2">Address Line 2</label>
+                                <input value="{{$address->line_2}}" type="text" class="form-control"
+                                       name="address_line_2"
+                                       id="address_line_2">
+                            </div>
+                            <div class="form-group">
+                                <label for="city">City</label>
+                                <input type="text" value="{{$address->city}}" class="form-control" name="city"
+                                       id="city">
+                                <div id="city_error"
+                                     class="error-message"><!-- filled by javascript automatically --></div>
+                            </div>
+                            <label class="col-sm-4 control-label" for="state">State*</label>
+                            <div class="col-sm-8">
+                                <select name="state" id="state" class="form-control">
+                                    <option {{$address->state == 'AL' ? "selected='selected'" : ''}}
+                                            value="AL">Alabama</option>
+                                    <option {{$address->state == 'AK' ? "selected='selected'" : ''}}
+                                            value="AK">Alaska</option>
+                                    <option {{$address->state == 'AZ' ? "selected='selected'" : ''}}
+                                            value="AZ">Arizona</option>
+                                    <option {{$address->state == 'AR' ? "selected='selected'" : ''}}
+                                            value="AR">Arkansas</option>
+                                    <option {{$address->state == 'CA' ? "selected='selected'" : ''}}
+                                            value="CA">California</option>
+                                    <option {{$address->state == 'CO' ? "selected='selected'" : ''}}
+                                            value="CO">Colorado</option>
+                                    <option {{$address->state == 'CT' ? "selected='selected'" : ''}}
+                                            value="CT">Connecticut</option>
+                                    <option {{$address->state == 'DE' ? "selected='selected'" : ''}}
+                                            value="DE">Delaware</option>
+                                    <option {{$address->state == 'DC' ? "selected='selected'" : ''}}
+                                            value="DC">District Of Columbia</option>
+                                    <option {{$address->state == 'FL' ? "selected='selected'" : ''}}
+                                            value="FL">Florida</option>
+                                    <option {{$address->state == 'GA' ? "selected='selected'" : ''}}
+                                            value="GA">Georgia</option>
+                                    <option {{$address->state == 'HI' ? "selected='selected'" : ''}}
+                                            value="HI">Hawaii</option>
+                                    <option {{$address->state == 'ID' ? "selected='selected'" : ''}}
+                                            value="ID">Idaho</option>
+                                    <option {{$address->state == 'IL' ? "selected='selected'" : ''}}
+                                            value="IL">Illinois</option>
+                                    <option {{$address->state == 'IN' ? "selected='selected'" : ''}}
+                                            value="IN">Indiana</option>
+                                    <option {{$address->state == 'IA' ? "selected='selected'" : ''}}
+                                            value="IA">Iowa</option>
+                                    <option {{$address->state == 'KS' ? "selected='selected'" : ''}}
+                                            value="KS">Kansas</option>
+                                    <option {{$address->state == 'KY' ? "selected='selected'" : ''}}
+                                            value="KY">Kentucky</option>
+                                    <option {{$address->state == 'LA' ? "selected='selected'" : ''}}
+                                            value="LA">Louisiana</option>
+                                    <option {{$address->state == 'ME' ? "selected='selected'" : ''}}
+                                            value="ME">Maine</option>
+                                    <option {{$address->state == 'MD' ? "selected='selected'" : ''}}
+                                            value="MD">Maryland</option>
+                                    <option {{$address->state == 'MA' ? "selected='selected'" : ''}}
+                                            value="MA">Massachusetts</option>
+                                    <option {{$address->state == 'MI' ? "selected='selected'" : ''}}
+                                            value="MI">Michigan</option>
+                                    <option {{$address->state == 'MN' ? "selected='selected'" : ''}}
+                                            value="MN">Minnesota</option>
+                                    <option {{$address->state == 'MS' ? "selected='selected'" : ''}}
+                                            value="MS">Mississippi</option>
+                                    <option {{$address->state == 'MO' ? "selected='selected'" : ''}}
+                                            value="MO">Missouri</option>
+                                    <option {{$address->state == 'MT' ? "selected='selected'" : ''}}
+                                            value="MT">Montana</option>
+                                    <option {{$address->state == 'NE' ? "selected='selected'" : ''}}
+                                            value="NE">Nebraska</option>
+                                    <option {{$address->state == 'NV' ? "selected='selected'" : ''}}
+                                            value="NV">Nevada</option>
+                                    <option {{$address->state == 'NH' ? "selected='selected'" : ''}}
+                                            value="NH">New Hampshire</option>
+                                    <option {{$address->state == 'NJ' ? "selected='selected'" : ''}}
+                                            value="NJ">New Jersey</option>
+                                    <option {{$address->state == 'NM' ? "selected='selected'" : ''}}
+                                            value="NM">New Mexico</option>
+                                    <option {{$address->state == 'NY' ? "selected='selected'" : ''}}
+                                            value="NY">New York</option>
+                                    <option {{$address->state == 'NC' ? "selected='selected'" : ''}}
+                                            value="NC">North Carolina</option>
+                                    <option {{$address->state == 'ND' ? "selected='selected'" : ''}}
+                                            value="ND">North Dakota</option>
+                                    <option {{$address->state == 'OH' ? "selected='selected'" : ''}}
+                                            value="OH">Ohio</option>
+                                    <option {{$address->state == 'OK' ? "selected='selected'" : ''}}
+                                            value="OK">Oklahoma</option>
+                                    <option {{$address->state == 'OR' ? "selected='selected'" : ''}}
+                                            value="OR">Oregon</option>
+                                    <option {{$address->state == 'PA' ? "selected='selected'" : ''}}
+                                            value="PA">Pennsylvania</option>
+                                    <option {{$address->state == 'RI' ? "selected='selected'" : ''}}
+                                            value="RI">Rhode Island</option>
+                                    <option {{$address->state == 'SC' ? "selected='selected'" : ''}}
+                                            value="SC">South Carolina</option>
+                                    <option {{$address->state == 'SD' ? "selected='selected'" : ''}}
+                                            value="SD">South Dakota</option>
+                                    <option {{$address->state == 'TN' ? "selected='selected'" : ''}}
+                                            value="TN">Tennessee</option>
+                                    <option {{$address->state == 'TX' ? "selected='selected'" : ''}}
+                                            value="TX">Texas</option>
+                                    <option {{$address->state == 'UT' ? "selected='selected'" : ''}}
+                                            value="UT">Utah</option>
+                                    <option {{$address->state == 'VT' ? "selected='selected'" : ''}}
+                                            value="VT">Vermont</option>
+                                    <option {{$address->state == 'VA' ? "selected='selected'" : ''}}
+                                            value="VA">Virginia</option>
+                                    <option {{$address->state == 'WA' ? "selected='selected'" : ''}}
+                                            value="WA">Washington</option>
+                                    <option {{$address->state == 'WV' ? "selected='selected'" : ''}}
+                                            value="WV">West Virginia</option>
+                                    <option {{$address->state == 'WI' ? "selected='selected'" : ''}}
+                                            value="WI">Wisconsin</option>
+                                    <option {{$address->state == 'WY' ? "selected='selected'" : ''}}
+                                            value="WY">Wyoming</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="zip">ZIP Code</label>
+                                <input value="{{$address->zip}}" type="text" class="form-control" name="zip" id="zip">
+                                <div id="zip_error"
+                                     class="error-message"><!-- filled by javascript automatically --></div>
+                            </div>
                             <button id="submit" type="submit" class="btn btn-primary btn-lg">Update Account</button>
                         </form>
                     <div></div>

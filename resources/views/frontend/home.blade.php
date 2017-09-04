@@ -1,7 +1,6 @@
 @extends('layouts.frontend.main')
 @section('title', 'Aligning vision with Reality')
 @section('content')
-
     <div class="main search-form">
         <div class="container">
             <div class="row">
@@ -20,7 +19,7 @@
                                     <div class="form-group">
                                         <input type="text" name="search_field"
                                                class="form-control input-lg"
-                                               placeholder="Country, State, County, City, Zip, Title, Address, ID."/>
+                                               placeholder="Address, City, State, ZIP Code"/>
                                     </div>
                                 </div>
                                 <div class="col-md-6">

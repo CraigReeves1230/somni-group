@@ -10036,6 +10036,11 @@ $(function () {
     var password = $("#password");
     var password_confirm = $("#password-confirm");
     var area_code = $("#area-code");
+    var address_line_1 = $("#address_line_1");
+    var address_line_2 = $("#address_line_2");
+    var city = $("#city");
+    var state = $("#state");
+    var zip = $("#zip");
     var phone_number = $("#phone-number");
     var dob = $("#dob");
     var checkbox = $("#checkbox");
@@ -10043,6 +10048,10 @@ $(function () {
     var email_error = $("#email-error");
     var password_error = $("#password-error");
     var password_confirm_error = $("#password-confirm-error");
+    var address_error = $("#address_error");
+    var city_error = $("#city_error");
+    var state_error = $("#state_error");
+    var zip_error = $("#zip_error");
     var phone_number_error = $("#phone-number-error");
     var checkbox_error = $("#checkbox-error");
     var error_messages = $(".error-message");
@@ -10108,6 +10117,24 @@ $(function () {
             form_ok = false;
         }
 
+        // make sure that address is properly formatted
+        if (address_line_1.val() !== '' || address_line_2.val() !== '' || city.val() !== '' || zip.val() !== '') {
+            if (address_line_1.val() === '') {
+                $("<div>Address line 1 is required.</div>").appendTo(address_error);
+                form_ok = false;
+            }
+
+            if (city.val() === '') {
+                $("<div>City is required.</div>").appendTo(city_error);
+                form_ok = false;
+            }
+
+            if (zip.val() === '') {
+                $("<div>ZIP Code is required.</div>").appendTo(zip_error);
+                form_ok = false;
+            }
+        }
+
         // if form is ok check if email is unique. If so, submit the form and redirect
         if (form_ok) {
             $.ajax({
@@ -10134,7 +10161,12 @@ $(function () {
                             checkbox: checkbox.prop('checked'),
                             password_confirmation: password_confirm.val(),
                             area_code: area_code.val(),
-                            phone_number: phone_number.val()
+                            phone_number: phone_number.val(),
+                            address_line_1: address_line_1.val(),
+                            address_line_2: address_line_2.val(),
+                            city: city.val(),
+                            state: state.val(),
+                            zip: zip.val()
                         },
                         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                         async: true,
