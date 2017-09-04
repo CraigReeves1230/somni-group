@@ -10,6 +10,11 @@ use Carbon\Carbon;
 
 class UserRepository implements iRepository
 {
+    private $address_repository;
+
+    function __construct(AddressRepository $address_repository){
+        $this->address_repository = $address_repository;
+    }
 
     function store($data, $controller = null)
     {
@@ -26,7 +31,7 @@ class UserRepository implements iRepository
         }
 
         // parse birthday but only if one was put in
-        if($data->dob !== null) {
+        if($data['dob'] !== null) {
             $dob = Carbon::parse($data->dob);
         } else {
             $dob = null;
@@ -34,11 +39,19 @@ class UserRepository implements iRepository
 
         // create a new user
         $user = new User([
-            'name' => $data->name,
-            'password' => bcrypt($data->password),
-            'email' => strtolower($data->email),
+            'name' => $data['name'],
+            'password' => bcrypt($data['password']),
+            'email' => strtolower($data['email']),
             'dob' => $dob
         ]);
+
+        // create address for user if one was entered
+        if($data['address_line_1'] !== null || $data['address_line_2'] !== null || $data['city'] !== null ||
+            $data['zip'] !== null){
+            if($address = $this->address_repository->store($data, $this)) {
+                $user->address()->associate($address);
+            }
+        }
 
         // clean up area code
         $area_code = str_replace('(', '', $data['area_code']);
@@ -51,6 +64,7 @@ class UserRepository implements iRepository
         $phone = str_replace(')', '', $phone);
         $phone = str_replace('-', '', $phone);
         $phone = str_replace(',', '', $phone);
+
 
         $phone_number = PhoneNumber::create([
             'area_code' => $area_code,
@@ -67,6 +81,7 @@ class UserRepository implements iRepository
 
     function update($user, $data, $controller = null)
     {
+
         if ($controller != null){
             $controller->validate($data, [
                 'name' => 'required|string|min:2|max:255',
@@ -87,10 +102,28 @@ class UserRepository implements iRepository
         }
 
         // parse birthday, but only if one was actually put in
-        if($data->dob !== null) {
-            $dob = Carbon::parse($data->dob);
+        if($data['dob'] !== null) {
+            $dob = Carbon::parse($data['dob']);
         } else {
             $dob = null;
+        }
+
+        // update address for user if one was entered already
+        if($data['address_line_1'] !== null || $data['address_line_2'] !== null || $data['city'] !== null ||
+            $data['zip'] !== null){
+            // update address if it is already there
+            if($user->address !== null) {
+                $address = $user->address;
+                $this->address_repository->update($address, $data, $this);
+            } else {
+                // create new address if there isn't one there
+                if($address = $this->address_repository->store($data, $this)){
+                    $user->address()->associate($address);
+                }
+            }
+        } else {
+            // if user had an address, delete it since the user no longer wants their address listed
+            $this->address_repository->delete($user->address);
         }
 
         // clean up area code
@@ -109,18 +142,18 @@ class UserRepository implements iRepository
         $phone_number = $user->phone_number;
         $phone_number->area_code = $area_code;
         $phone_number->number = $phone;
-        $phone_number->save();
+        $phone_number->update();
 
         // update user
-        $user->name = $data->name;
-        $user->email = strtolower($data->email);
+        $user->name = $data['name'];
+        $user->email = strtolower($data['email']);
         $user->dob = $dob;
 
-        if($data->password != null) {
-            $user->password = bcrypt($data->password);
+        if($data['password'] != null) {
+            $user->password = bcrypt($data['password']);
         }
 
-        $this->save($user);
+        $user->update();
         return $user;
     }
 

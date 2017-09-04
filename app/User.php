@@ -4,10 +4,12 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Cashier\Billable;
 
 class User extends Authenticatable
 {
     use Notifiable;
+    use Billable;
 
     /**
      * The attributes that are mass assignable.
@@ -15,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'dob'
+        'name', 'email', 'password', 'dob', 'address_id'
     ];
 
     /**
@@ -35,6 +37,11 @@ class User extends Authenticatable
     // returns the phone number for user
     function phone_number(){
         return $this->belongsTo('App\PhoneNumber');
+    }
+
+    // get the address for user
+    function address(){
+        return $this->belongsTo('App\Address');
     }
 
 }

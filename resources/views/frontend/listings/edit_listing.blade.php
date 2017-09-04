@@ -155,7 +155,7 @@
                                 </div>
                                 <div id="city-error" class="error-message"></div>
                                 <div class="form-group">
-                                    <label class="col-sm-4 control-label">State*</label>
+                                    <label class="col-sm-4 control-label" for="state">State*</label>
                                     <div class="col-sm-8">
                                         <select name="state" id="state" class="form-control">
                                             <option {{$listing->address->state == 'AL' ? "selected='selected'" : ''}}

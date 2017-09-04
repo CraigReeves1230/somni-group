@@ -138,8 +138,7 @@ class ListingRepository implements iRepository
                 }
             }
             $listing->images()->delete();
-            $listing->address->location()->delete();
-            $listing->address()->delete();
+            $listing->address_repository->delete($listing->address);
 
             // delete from search index
             $this->search_index->remove_listing($listing);

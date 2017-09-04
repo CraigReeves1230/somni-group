@@ -9,7 +9,7 @@ class Listing extends Model
     protected $fillable = [
         'title', 'type', 'price', 'bedrooms', 'bathrooms',
         'area', 'mls', 'location', 'address', 'city', 'zip',
-        'description', 'profile'
+        'description', 'profile', 'profile_image', 'profile_image_id'
     ];
 
     // gets the user for a listing
@@ -22,8 +22,14 @@ class Listing extends Model
         return $this->morphMany('App\Image', 'imageable');
     }
 
+    // get profile image by id
+    function getProfileImageById(){
+        return Image::find($this->profile_image_id);
+    }
+
     // get address
     function address(){
         return $this->belongsTo('App\Address');
     }
+
 }

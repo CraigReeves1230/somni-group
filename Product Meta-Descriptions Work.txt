@@ -1,0 +1,30 @@
+META-DESCRIPTION
+
+1. This will be a column added to the database for product and product description
+	a. Create a migration for products and add meta_description.
+	b. Create a column called data, make it a string and make it nullable
+	c. Migrate it.
+2. Put this field in the Admin tool when one can add a new product
+	a. Go to the view in the Admin tool where adding a product is
+	b. Create a new field and call it meta-description
+3. Put this field in the Admin tool when one can edit a product
+	a. Go to the view in the Admin tool where adding a product is
+	b. Create a new field and call it meta-description
+	c. Put as the value $product->meta_description
+4. Go to the store or save function for a product and add that to what is saved
+	a. Go to the product controller
+	b. Go to the save section and add that to the data that saves
+5. Go to the update function for a product and add that to what is saved
+	a. Go to the product controller
+	b. Go to the update section and add that to the data that update
+6. On the product page, create an IF statement where if a meta-description for that product does NOT exist, it will get it from the page.
+   This is because if there is one in the database, we want to get the meta description from there and not the page itself. The else statement
+   will be that it gets it from the page.
+
+REPEAT THIS WHOLE PROCESS WITH PRODUCT CATEGORIES
+
+
+
+
+
+

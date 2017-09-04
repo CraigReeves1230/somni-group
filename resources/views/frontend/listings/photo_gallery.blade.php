@@ -24,7 +24,7 @@
                 <div class="col-lg-3">
                     <div class="card gallery-image">
                         <a data-toggle="modal" data-target="#modal-{{$image->id}}">
-                            <img class="img-fluid profile" src="{{$image->path}}" alt="">
+                            <img class="img-fluid profile" src="/img/{{$image->path}}" alt="">
                         </a>
                         <div class="card-block">
                             <form action="{{route('make_profile', ['listing_id' => $listing->id, 'image_id' =>
