@@ -38,7 +38,8 @@ class SearchBar extends Component{
                                     <div className="form-group">
                                         <input name="search_field" type="text" className="form-control input-lg"
                                            placeholder="Address, City, State, ZIP Code"
-                                               value={this.state.search_query} onChange={(event) => this.setState({search_query: event.target.value})}
+                                               value={this.state.search_query !== '*' ? this.state.search_query : ''}
+                                               onChange={(event) => this.setState({search_query: event.target.value})}
                                             />
                                     </div>
                                 </div>

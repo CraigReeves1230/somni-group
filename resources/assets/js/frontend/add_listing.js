@@ -68,7 +68,7 @@ $(function(){
 
         if(address.val() == ''){
             form_ok = false;
-            $("<div>Address is required</div>").appendTo(address_error);
+            $("<div>Address line 1 is required</div>").appendTo(address_error);
         }
 
         if(city.val() == ''){

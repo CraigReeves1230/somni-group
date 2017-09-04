@@ -30,7 +30,7 @@ class ListingRepository implements iRepository
                 'bedrooms' => 'required',
                 'bathrooms' => 'required',
                 'area' => 'required|regex:/^[0-9]+$/',
-                'address' => 'required',
+                'address_line_1' => 'required',
                 'city' => 'required',
                 'state' => 'required',
                 'zip' => 'required',

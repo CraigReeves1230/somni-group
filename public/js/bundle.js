@@ -9860,7 +9860,7 @@ $(function () {
 
         if (address.val() == '') {
             form_ok = false;
-            $("<div>Address is required</div>").appendTo(address_error);
+            $("<div>Address line 1 is required</div>").appendTo(address_error);
         }
 
         if (city.val() == '') {
@@ -23137,7 +23137,8 @@ var SearchBar = function (_Component) {
                                         { className: 'form-group' },
                                         _react2.default.createElement('input', { name: 'search_field', type: 'text', className: 'form-control input-lg',
                                             placeholder: 'Address, City, State, ZIP Code',
-                                            value: this.state.search_query, onChange: function onChange(event) {
+                                            value: this.state.search_query !== '*' ? this.state.search_query : '',
+                                            onChange: function onChange(event) {
                                                 return _this2.setState({ search_query: event.target.value });
                                             }
                                         })
@@ -23244,64 +23245,77 @@ var SearchSummary = function (_Component) {
     }
 
     _createClass(SearchSummary, [{
-        key: "renderSummary",
+        key: 'renderSummary',
         value: function renderSummary() {
+            // we only want to list by location if the wildcard search isn't used
             if (this.props.app.state.listings.length > 0 && this.props.app.state.listings !== null) {
-                return _react2.default.createElement(
-                    "h1",
-                    { className: "page-header h3" },
-                    this.pluarlizeProperty(),
-                    " ",
-                    this.stateType(),
-                    " near ",
-                    this.state.search_query
-                );
+                // only if wildcard search isnt used...
+                if (this.state.search_query !== '*') {
+                    return _react2.default.createElement(
+                        'h1',
+                        { className: 'page-header h3' },
+                        this.pluarlizeProperty(),
+                        ' ',
+                        this.stateType(),
+                        'near ',
+                        this.state.search_query
+                    );
+                } else {
+                    // if wildcard search is used, display a general message
+                    return _react2.default.createElement(
+                        'h1',
+                        { className: 'page-header h3' },
+                        'All listings for ',
+                        this.state.search_type,
+                        '...'
+                    );
+                }
             } else {
                 return _react2.default.createElement(
-                    "h1",
-                    { className: "page-header h3" },
-                    "No results from your search could be found."
+                    'h1',
+                    { className: 'page-header h3' },
+                    'No results from your search could be found.'
                 );
             }
         }
     }, {
-        key: "pluarlizeProperty",
+        key: 'pluarlizeProperty',
         value: function pluarlizeProperty() {
             if (this.props.app.state.listings !== null) {
                 if (this.props.app.state.listings.length > 1) {
                     return _react2.default.createElement(
-                        "span",
+                        'span',
                         null,
-                        "Properties"
+                        'Properties'
                     );
                 } else if (this.props.app.state.listings.length == 1) {
                     return _react2.default.createElement(
-                        "span",
+                        'span',
                         null,
-                        "Property"
+                        'Property'
                     );
                 }
             }
         }
     }, {
-        key: "stateType",
+        key: 'stateType',
         value: function stateType() {
             if (this.state.search_type == 'sale') {
                 return _react2.default.createElement(
-                    "span",
+                    'span',
                     null,
-                    "for sale"
+                    'for sale'
                 );
             } else if (this.state.search_type == 'rent') {
                 return _react2.default.createElement(
-                    "span",
+                    'span',
                     null,
-                    "for rent"
+                    'for rent'
                 );
             }
         }
     }, {
-        key: "render",
+        key: 'render',
         value: function render() {
             return this.renderSummary();
         }

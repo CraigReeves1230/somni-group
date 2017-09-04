@@ -87,4 +87,6 @@ Route::group(['middlewareGroups' => 'web'], function() {
 
     Route::post('/listings/get_all_data', 'ListingsController@getAllDataFromListingResults')->name('get_data_from_listings');
 
+    Route::get('/listings/all_listings/{search_type}', 'ListingsController@all_listings')->name('all_listings');
+
 });

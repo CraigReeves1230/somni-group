@@ -53,8 +53,8 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="property_listing.html">For Rent</a></li>
-                <li><a href="property_grid.html">For Sale</a></li>
+                <li><a href="{{route('all_listings', ['search_type' => 'rent'])}}">For Rent</a></li>
+                <li><a href="{{route('all_listings', ['search_type' => 'sale'])}}">For Sale</a></li>
                 <li><a href="agent_list.html">Agents</a></li>
                 @if(!Auth::guest())
                     <li><a href="{{route('my_listings')}}">My Listings</a></li>

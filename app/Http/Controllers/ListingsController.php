@@ -278,15 +278,20 @@ class ListingsController extends Controller
         // set query and get search results
         $query->createFilterQuery('type')->setQuery($statement);
 
-        $query->createFilterQuery('distance')->setQuery(
-            $helper->geofilt(
-                'latlon',
-                doubleval($latitude),
-                doubleval($longitude),
-                doubleval($distance * 1.609344))
-        );
+        // if the asterisk is used, it will return all listings, if address entered, filter by location
+        if($search_query !== '*') {
+            $query->createFilterQuery('distance')->setQuery(
+                $helper->geofilt(
+                    'latlon',
+                    doubleval($latitude),
+                    doubleval($longitude),
+                    doubleval($distance * 1.609344))
+            );
+        }
 
+        // store query in resultset
         $resultset = $client->select($query);
+
         // store all search results in array
         $listings_array = [];
         foreach($resultset as $result){
@@ -310,4 +315,24 @@ class ListingsController extends Controller
             return redirect()->back();
         }
     }
+
+    // for sale link
+    function all_listings($search_type){
+        // get the current user if one is logged in
+        $user = !Auth::guest() ? Auth::user() : null;
+
+        // if there is a logged in user, get their address if one exists
+        $address = ($user !== null && $user->address !== null) ?
+            "{$user->address->line_1} {$user->address->city} {$user->address->zip}" : null;
+
+        // if there is an address present, search by address
+        if($address !== null){
+            return redirect()->route('search_results', ['search_query' => $address, 'search_type' => $search_type]);
+        } else {
+            // if there isn't an address present, all listings will show up
+            return redirect()->route('search_results', ['search_query' => '*', 'search_type' => $search_type]);
+        }
+
+    }
+
 }

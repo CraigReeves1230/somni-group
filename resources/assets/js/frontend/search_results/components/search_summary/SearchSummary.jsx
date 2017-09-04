@@ -12,12 +12,22 @@ class SearchSummary extends Component{
     }
 
     renderSummary(){
-        if(this.props.app.state.listings.length > 0 && this.props.app.state.listings !== null){
-            return(
-                <h1 className="page-header h3">{this.pluarlizeProperty()} {this.stateType()} near {this.state.search_query}</h1>
-            );
+        // we only want to list by location if the wildcard search isn't used
+        if (this.props.app.state.listings.length > 0 && this.props.app.state.listings !== null) {
+            // only if wildcard search isnt used...
+            if(this.state.search_query !== '*') {
+                return (
+                    <h1 className="page-header h3">{this.pluarlizeProperty()} {this.stateType()}
+                        near {this.state.search_query}</h1>
+                );
+            } else {
+                // if wildcard search is used, display a general message
+                return (
+                    <h1 className="page-header h3">All listings for {this.state.search_type}...</h1>
+                );
+            }
         } else {
-            return(
+            return (
                 <h1 className="page-header h3">No results from your search could be found.</h1>
             );
         }
