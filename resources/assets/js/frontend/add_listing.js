@@ -100,7 +100,7 @@ $(function(){
                     area: area.val(),
                     mls: mls.val(),
                     location: location.val(),
-                    address: address.val(),
+                    address_line_1: address.val(),
                     address_line_2: address_line_2.val(),
                     city: city.val(),
                     state: state.val(),

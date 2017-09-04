@@ -85,4 +85,5 @@ Route::group(['middlewareGroups' => 'web'], function() {
     Route::delete('/listings/{id}/delete', 'ListingsController@delete_listing')->name('delete_listing')->middleware('auth');
 
     Route::post('/listings/get_all_data', 'ListingsController@getAllDataFromListingResults')->name('get_data_from_listings');
+
 });

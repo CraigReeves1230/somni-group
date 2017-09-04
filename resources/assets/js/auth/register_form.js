@@ -108,20 +108,38 @@ $(function(){
             }
         }
 
-        // if form is ok check if email is unique. If so, submit the form and redirect
+        // if form is ok check if email is unique and that the address is real. If so, submit the form and redirect
         if(form_ok) {
             $.ajax({
                 url: form.data("email-validate"),
                 type: "POST",
-                data: {email: email.val().toLowerCase()},
+                data: {
+                    email: email.val().toLowerCase(),
+                    address_line_1: address_line_1.val(),
+                    address_line_2: address_line_2.val(),
+                    city: city.val(),
+                    state: state.val(),
+                    zip: zip.val()
+                },
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 async: true,
                 timeout: 30000,
                 dataType: 'json'
             }).done((responsedata) => {
                 const email_unique = responsedata.email_unique;
-                if (email_unique == false) {
-                    $("<div>An account with this email address already exists</div>").appendTo(email_error);
+                const real_address = responsedata.real_address;
+                if (email_unique == false || real_address == false) {
+
+                    // handle duplicate email
+                    if(email_unique == false) {
+                        $("<div>An account with this email address already exists</div>").appendTo(email_error);
+                    }
+
+                    // handle fake address
+                    if(real_address == false){
+                        $("<div>The address entered does not match postal records</div>").appendTo(address_error);
+                    }
+
                 } else {
                     $.ajax({
                         url: form.attr('action'),

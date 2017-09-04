@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Address;
+use App\Services\GeoLocator;
 use App\Services\Mailer;
 use App\Services\Repositories\AddressRepository;
 use App\Services\Repositories\UserRepository;
@@ -19,12 +20,14 @@ class UsersController extends Controller
     private $token_service;
     private $user_repository;
     private $address_repository;
+    private $geolocator;
 
     function __construct(TokenMaker $token_service, UserRepository $user_repository, AddressRepository
-    $address_repository){
+    $address_repository, GeoLocator $geolocator){
         $this->token_service = $token_service;
         $this->user_repository = $user_repository;
         $this->address_repository = $address_repository;
+        $this->geolocator = $geolocator;
     }
 
     // go to form to create a user
@@ -51,6 +54,29 @@ class UsersController extends Controller
         }
     }
 
+    // validates address to see if it is a real address
+    function validate_address($request){
+
+        // get geolocator
+        $geo = $this->geolocator;
+
+        // by default, is_real is true
+        $is_real = true;
+        $address = null;
+
+        // we only want to test the address if one was put in...
+        if($request['address_line_1'] !== null || $request['address_line_2'] !== null || $request['city'] !== null ||
+            $request['zip'] !== null) {
+
+            // convert address into string
+            $address_string = "{$request['address_line_1']} {$request['city']} {$request['state']} {$request['zip']}";
+
+            $is_real = $geo->convert($address_string) ? true : false;
+        }
+
+        return $is_real;
+    }
+
     function logout(){
         Auth::logout();
         return redirect('/');
@@ -68,7 +94,11 @@ class UsersController extends Controller
             } else {
                 $email_unique = true;
             }
-            return response()->json(['email_unique' => $email_unique]);
+
+            // also check to see if address is a real address
+            $real_address = $this->validate_address($request);
+
+            return response()->json(['email_unique' => $email_unique, 'real_address' => $real_address]);
         }
     }
 
@@ -88,7 +118,11 @@ class UsersController extends Controller
                     $email_unique = true;
                 }
             }
-            return response()->json(['email_unique' => $email_unique]);
+
+            // also check to see if address is a real address
+            $real_address = $this->validate_address($request);
+
+            return response()->json(['email_unique' => $email_unique, 'real_address' => $real_address]);
         }
     }
 
