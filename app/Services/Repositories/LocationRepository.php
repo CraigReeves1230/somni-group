@@ -114,6 +114,16 @@ class LocationRepository implements iRepository
         // TODO: Implement find_by() method.
     }
 
+    function where($criteria, $in_var, $paginate = true, $per_page = 10){
+        if($paginate){
+            $ret_val = Location::where($criteria, $in_var)->paginate($per_page);
+        } else {
+            $ret_val = Location::where($criteria, $in_var)->get();
+        }
+
+        return $ret_val;
+    }
+
     function delete($location)
     {
         $location->delete();

@@ -172,6 +172,16 @@ class UserRepository implements iRepository
         return User::where($criteria, $in_var)->first();
     }
 
+    function where($criteria, $in_var, $paginate = true, $per_page = 10){
+        if($paginate){
+            $ret_val = User::where($criteria, $in_var)->paginate($per_page);
+        } else {
+            $ret_val = User::where($criteria, $in_var)->get();
+        }
+
+        return $ret_val;
+    }
+
     function delete($user){
         $user->delete();
     }

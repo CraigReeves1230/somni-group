@@ -1,0 +1,212 @@
+
+*{
+    box-sizing: border-box;
+}
+
+.container{
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+nav {
+    background: #fff;
+    box-shadow: 0 0 15px 0 rgba(0,0,0,.10)
+}
+
+nav ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    position: relative;
+    text-align: left;
+}
+
+nav li{
+    display: inline-block;
+}
+
+nav a{
+    color: #444;
+    text-decoration: none;
+    display: block;
+    padding: .75em 1.75em;
+}
+nav li:hover {
+    background: #444;
+}
+
+nav li:hover a {
+    color: #fff;
+}
+
+
+nav a:hover{
+    text-decoration: none;
+    color: white;
+    transition: .3s;
+}
+
+nav .menu-sub{
+    position: absolute;
+    width: 100%;
+    background-color: #444;
+    display: none;
+    color: #fff;
+    padding-top: 8px;
+    padding-bottom: 30px;
+    padding-left: 30px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+nav li:hover .menu-sub{
+    display: block;
+}
+
+nav .menu-sub ul li a:hover{
+    text-decoration: underline;
+}
+
+nav .menu-sub h3 {
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+    margin-top: 20px;
+}
+
+nav .menu-sub li{
+    display: block;
+    padding-right: 0px;
+}
+
+nav .menu-sub a{
+    padding: 0;
+}
+
+nav .menu-sub .sub-menu-col{
+    margin-right: 40px;
+}
+
+nav .menu-category{
+    margin: 1.5em 0em .5em;
+}
+
+ .mobile-handle{
+    display: none;
+    background-color: black;
+    color: white;
+    font-size: 2.5rem;
+    padding-left: 16px;
+    padding-right: 16px;
+    cursor: pointer;
+}
+
+nav .nav-close-btn {
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 20px;
+    background: #666666;
+    padding: 10px 20px 10px 20px;
+    text-decoration: none;
+    display: none;
+}
+
+nav .nav-close-btn:hover {
+    background: #a3a3a3;
+    text-decoration: none;
+}
+
+/** mobile menu **/
+
+.mobile-handle{
+    display: none;
+    background-color: black;
+    color: white;
+    font-size: 2.5rem;
+    padding-left: 16px;
+    padding-right: 16px;
+    cursor: pointer;
+}
+
+.mobile-nav-container{
+    background-color: #a3a3a3;
+}
+
+.mobile-menu{
+    color: black;
+    margin-left: 0px;
+    margin-right: 0px;
+    display: none;
+}
+
+.mobile-menu h3{
+    font-size: 1.15rem;
+}
+
+.mobile-menu li{
+    list-style: none;
+    padding-top: 15px;
+    margin-left: 0px;
+    padding-bottom: 15px;
+    cursor: pointer;
+}
+
+.mobile-menu .menu-sub{
+    display: none;
+    padding-left: 0px;
+}
+
+.mobile-menu .menu-sub ul li a{
+    font-size: 1.0rem;
+}
+
+.mobile-menu .menu-sub ul li{
+    padding-top: 7px;
+    padding-bottom: 7px;
+}
+
+.mobile-menu .menu-sub h3{
+    margin-top: 20px;
+}
+
+.mobile-menu ul{
+    padding-left: 20px;
+    margin-left: 0px;
+    margin-bottom: 0px;
+}
+
+.mobile-menu .nav-item a{
+    font-size: 1.3rem;
+    margin-left: 0px;
+    color: black;
+}
+
+.mobile-menu .nav-item a:hover{
+    color: white;
+    text-decoration: none;
+}
+
+
+@media screen and (max-width: 594px) {
+
+    .showing{
+        display: block;
+    }
+
+    nav{
+        display: none;
+    }
+
+    .mobile-handle{
+        display: block;
+    }
+
+}
+
+
+
+
+

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\frontend;
 
 use App\Address;
 use App\Services\GeoLocator;
@@ -8,12 +8,12 @@ use App\Services\Mailer;
 use App\Services\Repositories\AddressRepository;
 use App\Services\Repositories\UserRepository;
 use App\Services\TokenMaker;
-use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\Controller;
 
 class UsersController extends Controller
 {

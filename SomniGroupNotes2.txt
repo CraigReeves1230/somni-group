@@ -1,0 +1,35 @@
+Only agents can create properties for sale.
+
+THere will be two types of listings: ones scraped from FMLS and agent uploads.
+
+To sign up as an agent:
+
+Category fields
+- Real Estate Agent/Broker
+- landlord
+- Property Manager
+- Other Real Estate Professional
+
+Prospective agent will need to provide their License number in order to verify with grec.state.ga.us that they're an active agent.
+
+We'll make it free for now to sign up. Eventually we might bump it up to $10 per month.
+
+We also want a place where agents can be listed on our site. We also want it to where Agents can advertise themselves on the page (maybe the front page).
+
+Eventually we want a brokerage to be able to sign up. A brokerage can sign up other agents.
+
+Agents will have to pay a fee in order to upload their listing.
+
+We also need to set up a staging server for the site.
+
+We're only servicing Georgia for now.
+
+We also need to have a variable to determine if a house or property is sold. If it is sold, we will not have it will be removed from the search index.
+
+Add year built to listings
+
+Agents will be able to make changes to their listing.
+
+Once or twice a day, FMLS data will be pulled.
+
+The index will have to be 

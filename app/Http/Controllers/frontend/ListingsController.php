@@ -1,20 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\frontend;
 
 use App\Image;
-use App\PhoneNumber;
 use App\Services\Gateways\ListingGateway;
 use App\Services\GeoLocator;
 use App\Services\Repositories\AddressRepository;
 use App\Services\Repositories\ImageRepository;
 use App\Services\Repositories\UserRepository;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use App\Services\Repositories\ListingRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Pagination\LengthAwarePaginator;
+use App\Http\Controllers\Controller;
 
 class ListingsController extends Controller
 {

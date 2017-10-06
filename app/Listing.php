@@ -32,4 +32,9 @@ class Listing extends Model
         return $this->belongsTo('App\Address');
     }
 
+    // get appointment associated with listing
+    function appointment(){
+        return $this->hasOne('App\Appointment');
+    }
+
 }

@@ -40,6 +40,16 @@ class ImageRepository implements iRepository
         return Image::where($criteria, $in_var)->first();
     }
 
+    function where($criteria, $in_var, $paginate = true, $per_page = 10){
+        if($paginate){
+            $ret_val = Image::where($criteria, $in_var)->paginate($per_page);
+        } else {
+            $ret_val = Image::where($criteria, $in_var)->get();
+        }
+
+        return $ret_val;
+    }
+
     function delete($image){
         $image->delete();
     }

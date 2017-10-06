@@ -76,6 +76,16 @@ class AddressRepository implements iRepository
         // TODO: Implement find_by() method.
     }
 
+    function where($criteria, $in_var, $paginate = true, $per_page = 10){
+        if($paginate){
+            $ret_val = Address::where($criteria, $in_var)->paginate($per_page);
+        } else {
+            $ret_val = Address::where($criteria, $in_var)->get();
+        }
+
+        return $ret_val;
+    }
+
     function delete($address)
     {
         // first, delete the location for the address

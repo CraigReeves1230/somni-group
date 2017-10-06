@@ -1,0 +1,17 @@
+.item-box{
+    border-style: groove;
+    border-radius: 10px;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: 15px;
+    padding: 10px;
+}
+
+.stat-title{
+    margin-left: 10px;
+    color: brown;
+}
+
+.stat{
+    margin-left: 10px;
+}

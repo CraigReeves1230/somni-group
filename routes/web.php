@@ -14,7 +14,39 @@
 use App\User;
 use Illuminate\Http\Request;
 
-Route::group(['middlewareGroups' => 'web'], function() {
+/// ********************************** ADMIN **************************************************************************
+Route::group(['namespace' => 'admin', 'middlewareGroups' => 'web', 'middleware' => 'admin'], function() {
+
+    Route::get('/admin/dashboard', 'DashboardController@index')->name('admin_dashboard');
+
+    Route::get('/admin/listings/all', 'ListingsController@all_listings')->name('admin_all_listings');
+
+    Route::get('/admin/listings/approved', 'ListingsController@approved_listings')->name('admin_approved_listings');
+
+    Route::get('/admin/listings/pending', 'ListingsController@pending_listings')->name('admin_pending_listings');
+
+    Route::get('/admin/listings/rejected', 'ListingsController@rejected_listings')->name('admin_rejected_listings');
+
+    Route::get('/admin/listings/{id}/edit', 'ListingsController@edit')->name('admin_edit_listing');
+
+    Route::post('/admin/listings/{id}/edit', 'ListingsController@update')->name('admin_edit_listing_go');
+
+    Route::get('/admin/consultation/{listing_id}', 'ListingsController@new_consultation')->name('new_consultation');
+
+    Route::post('/admin/consultation/{listing_id}', 'ListingsController@save_consultation')->name('save_consultation');
+
+    Route::get('/admin/consultation/{listing_id}/edit', 'ListingsController@edit_consultation')->name('edit_consultation');
+
+    Route::post('/admin/consultation/{listing_id}/edit', 'ListingsController@update_consultation')->name('update_consultation');
+
+    Route::delete('/admin/consultation/{listing_id}', 'ListingsController@delete_consultation')->name('delete_consultation');
+
+    Route::delete('/admin/listings/{id}', 'ListingsController@delete_listing')->name('admin_delete_listing');
+
+});
+
+/// ********************************** FRONT END **********************************************************************
+Route::group(['namespace' => 'frontend', 'middlewareGroups' => 'web'], function() {
 
     // homepage route
     Route::get('/', function () {

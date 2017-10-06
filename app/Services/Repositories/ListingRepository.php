@@ -77,7 +77,7 @@ class ListingRepository implements iRepository
                 'bedrooms' => 'required',
                 'bathrooms' => 'required',
                 'area' => 'required|regex:/^[0-9]+$/',
-                'address' => 'required',
+                'address_line_1' => 'required',
                 'city' => 'required',
                 'state' => 'required',
                 'zip' => 'required',
@@ -128,6 +128,16 @@ class ListingRepository implements iRepository
         return Listing::where($criteria, $in_var)->first();
     }
 
+    function where($criteria, $in_var, $paginate = true, $per_page = 10){
+        if($paginate){
+            $ret_val = Listing::where($criteria, $in_var)->paginate($per_page);
+        } else {
+            $ret_val = Listing::where($criteria, $in_var)->get();
+        }
+
+        return $ret_val;
+    }
+
     function delete($listing){
 
         // Delete all associated items with listing
@@ -147,5 +157,16 @@ class ListingRepository implements iRepository
             $listing->delete();
         });
 
+    }
+
+    function all($paginate = false, $per_page = 10){
+
+        if($paginate == true){
+            $ret_val = Listing::paginate($per_page);
+        } else {
+            $ret_val = Listing::get();
+        }
+
+        return $ret_val;
     }
 }

@@ -14,4 +14,10 @@ class PhoneNumber extends Model
     function user(){
         return $this->hasOne('App\User');
     }
+
+    // returns phone number formatted US/Canada style
+    function formatted_number(){
+        $phone_number = "({$this->area_code}) " . substr_replace($this->number, '-', 3, 0);
+        return $phone_number;
+    }
 }

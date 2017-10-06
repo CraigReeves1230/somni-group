@@ -59,9 +59,15 @@
                 @if(!Auth::guest())
                     <li><a href="{{route('my_listings')}}">My Listings</a></li>
                 @endif
+                @if(!Auth::guest())
+                    @if(Auth::user()->admin)
+                        <li><a href="{{route('admin_dashboard')}}">Admin</a></li>
+                    @endif
+                @endif
                 <li><a href=""></a></li>
-                <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                         aria-haspopup="true" aria-expanded="false">More <span class="caret"></span></a>
+                <li class="dropdown"> <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                         aria-haspopup="true" aria-expanded="false">More <span
+                                         class="caret"></span></a> -->
                     <ul class="dropdown-menu mega">
                         <li class="navbar-text">
                             <div class="column">
