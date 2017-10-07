@@ -113,8 +113,10 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li class="add-listing visible-md visible-lg"><a href="{{route('add_listing')}}"><span><i class="fa
-                fa-plus" aria-hidden="true"></i> Add listing</span></a></li>
+                @if(!Auth::guest() && Auth::user()->agent)
+                    <li class="add-listing visible-md visible-lg"><a href="{{route('add_listing')}}"><span><i class="fa
+                    fa-plus" aria-hidden="true"></i> Add listing</span></a></li>
+                @endif
 
                 <!-- this varies depending on if user is signed in -->
                 @if(Auth::guest())
