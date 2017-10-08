@@ -13,5 +13,13 @@ class Image extends Model
         return $this->morphTo();
     }
 
+    //provide image with file location with accessor
+    public function getPathAttribute($value){
+        $new_string = "/img/" . $value;
+        return $new_string;
+    }
+
+
+
 }
 

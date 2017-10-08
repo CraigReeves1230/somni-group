@@ -11,6 +11,7 @@ $(function(){
     const area = $("#area");
     const mls = $("#mls");
     const location = $("#location");
+    const year_built = $("#year_built");
     const address = $("#address");
     const address_line_2 = $("#address_line_2");
     const city = $("#city");
@@ -100,6 +101,7 @@ $(function(){
                     area: area.val(),
                     mls: mls.val(),
                     location: location.val(),
+                    year_built: year_built.val(),
                     address_line_1: address.val(),
                     address_line_2: address_line_2.val(),
                     city: city.val(),

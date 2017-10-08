@@ -18,7 +18,7 @@
 
                             <!-- display listing image -->
                             <img class="img-fluid profile"
-                                 height="200" src="/img/{{$listing->profile_image}}" alt="">
+                                 height="200" src="{{$listing->profile_image_object->path}}" alt="">
 
                             <div class="add-photo-link"><a
                                 href="{{route('listing_upload_photos', ['id' => $listing->id])}}">Add/Edit
@@ -73,6 +73,9 @@
                                     {{$listing->bathrooms}}
                                 @endif
                             </span><br>
+                            <span class="stat-title">Year Built:</span><span class="stat">{{!$listing->year_built ?
+                            'N/A' :
+                            $listing->year_built}}</span><br>
                             <span class="stat-title">Status: </span>
                             @if($listing->status == 'inactive')
                                 <span class="stat font-error">Inactive</span>

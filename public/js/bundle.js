@@ -9803,6 +9803,7 @@ $(function () {
     var area = $("#area");
     var mls = $("#mls");
     var location = $("#location");
+    var year_built = $("#year_built");
     var address = $("#address");
     var address_line_2 = $("#address_line_2");
     var city = $("#city");
@@ -9892,6 +9893,7 @@ $(function () {
                     area: area.val(),
                     mls: mls.val(),
                     location: location.val(),
+                    year_built: year_built.val(),
                     address_line_1: address.val(),
                     address_line_2: address_line_2.val(),
                     city: city.val(),
@@ -10280,7 +10282,7 @@ if (listings.length > 0) {
                     location: listing.location,
                     id: listing.id,
                     status: listing.status,
-                    profile_image: "/img/" + listing.profile_image,
+                    profile_image: listing.profile_image,
                     created_at: created_ats[index]
                 };
 
@@ -23304,13 +23306,13 @@ var SearchSummary = function (_Component) {
                 return _react2.default.createElement(
                     'span',
                     null,
-                    'for sale'
+                    'for sale '
                 );
             } else if (this.state.search_type == 'rent') {
                 return _react2.default.createElement(
                     'span',
                     null,
-                    'for rent'
+                    'for rent '
                 );
             }
         }
@@ -23655,6 +23657,9 @@ var ResultsList = function (_Component) {
             mode: 'list'
         };
 
+        // file location prefix for images
+        _this.image_prefix = '/img/';
+
         // handle pagination
         _this.onChangePage = _this.onChangePage.bind(_this);
         return _this;
@@ -23728,7 +23733,7 @@ var ResultsList = function (_Component) {
                                 _react2.default.createElement(
                                     'a',
                                     { href: 'property_single.html' },
-                                    _react2.default.createElement('img', { className: 'img-responsive', src: listing.profile_image, alt: '' }),
+                                    _react2.default.createElement('img', { className: 'img-responsive', src: this.image_prefix + listing.profile_image, alt: '' }),
                                     _react2.default.createElement(
                                         'div',
                                         { className: 'item-for' },
@@ -23859,7 +23864,7 @@ var ResultsList = function (_Component) {
                             _react2.default.createElement(
                                 'a',
                                 { href: 'property_single.html' },
-                                _react2.default.createElement('img', { src: listing.profile_image, className: 'img-responsive' })
+                                _react2.default.createElement('img', { src: this.image_prefix + listing.profile_image, className: 'img-responsive' })
                             ),
                             _react2.default.createElement(
                                 'div',
@@ -23965,7 +23970,7 @@ var ResultsList = function (_Component) {
                                     _react2.default.createElement(
                                         'a',
                                         { href: 'property_single.html' },
-                                        _react2.default.createElement('img', { src: listing.profile_image, className: 'img-rounded', width: '64' })
+                                        _react2.default.createElement('img', { src: this.image_prefix + listing.profile_image, className: 'img-rounded', width: '64' })
                                     )
                                 ),
                                 _react2.default.createElement(

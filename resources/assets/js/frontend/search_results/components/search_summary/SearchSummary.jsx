@@ -45,9 +45,9 @@ class SearchSummary extends Component{
 
     stateType(){
         if(this.state.search_type == 'sale'){
-            return(<span>for sale</span>)
+            return(<span>for sale </span>)
         } else if(this.state.search_type == 'rent'){
-            return(<span>for rent</span>)
+            return(<span>for rent </span>)
         }
     }
 

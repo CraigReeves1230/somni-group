@@ -132,6 +132,13 @@
                                 </div>
                                 <div id="location-error" class="error-message"></div>
                                 <div class="form-group">
+                                    <label class="col-sm-4 control-label">Year Built</label>
+                                    <div class="col-sm-8">
+                                        <input id="year_built" name="year_built" type="text" class="form-control"
+                                               placeholder="" value="{{$listing->year_built}}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="col-sm-4 control-label">Address Line 1*</label>
                                     <div class="col-sm-8">
                                         <input id="address" name="address_line_1" type="text"
@@ -161,8 +168,6 @@
                                         <select name="state" id="state" class="form-control">
                                             <option {{$listing->address->state == 'GA' ? "selected='selected'" : ''}}
                                                     value="GA">Georgia</option>
-                                            <option {{$listing->address->state == 'TX' ? "selected='selected'" : ''}}
-                                                    value="TX">Texas</option>
                                         </select>
                                     </div>
                                 </div>

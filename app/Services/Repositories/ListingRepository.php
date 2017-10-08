@@ -14,10 +14,13 @@ class ListingRepository implements iRepository
 
     private $address_repository;
     private $search_index;
+    private $image_repository;
 
-    function __construct(AddressRepository $address_repository, SearchIndex $search_index){
+    function __construct(AddressRepository $address_repository, ImageRepository $image_repository, SearchIndex
+$search_index){
         $this->address_repository = $address_repository;
         $this->search_index = $search_index;
+        $this->image_repository = $image_repository;
     }
 
     function store($data, $controller = null)
@@ -55,6 +58,8 @@ class ListingRepository implements iRepository
             $listing->mls = $data->mls;
             $listing->location = $data->location;
             $listing->description = $data->description;
+            $listing->year_built = $data->year_built;
+            $listing->listing_type = 'user';
             $listing->address()->associate($address);
             $this->save($listing);
 
@@ -101,6 +106,7 @@ class ListingRepository implements iRepository
             $listing->area = $area;
             $listing->mls = $data->mls;
             $listing->location = $data->location;
+            $listing->year_built = $data->year_built;
             $listing->description = $data->description;
             $this->save($listing);
 
@@ -142,13 +148,14 @@ class ListingRepository implements iRepository
 
         // Delete all associated items with listing
         DB::transaction(function() use ($listing) {
+
+            // delete all images
             foreach($listing->images as $image){
-                if($image->path != '/img/generichouse.png') {
-                    unlink("../public{$image->path}");
-                }
+                $this->image_repository->delete($image);
             }
-            $listing->images()->delete();
-            $listing->address_repository->delete($listing->address);
+
+            // delete address
+            $this->address_repository->delete($listing->address);
 
             // delete from search index
             $this->search_index->remove_listing($listing);
@@ -156,7 +163,6 @@ class ListingRepository implements iRepository
             // delete listing
             $listing->delete();
         });
-
     }
 
     function all($paginate = false, $per_page = 10){

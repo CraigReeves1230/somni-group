@@ -12,6 +12,9 @@ class ResultsList extends Component{
             mode: 'list'
         };
 
+        // file location prefix for images
+        this.image_prefix = '/img/';
+
         // handle pagination
         this.onChangePage = this.onChangePage.bind(this);
     }
@@ -71,7 +74,7 @@ class ResultsList extends Component{
                     <div className="row">
                         <div className="col-md-4">
                             <div className="item-image"><a href="property_single.html">
-                                <img className="img-responsive" src={listing.profile_image} alt=""/>
+                                <img className="img-responsive" src={this.image_prefix + listing.profile_image} alt=""/>
                                 <div className="item-for">{type}</div>
                             </a></div>
                             <div className="added-on">Listed {listing.created_at} by</div>
@@ -107,7 +110,7 @@ class ResultsList extends Component{
             return(
                 <div className="col-md-4">
                     <div className="item">
-                        <div className="item-image"><a href="property_single.html"><img src={listing.profile_image} className="img-responsive" /></a>
+                        <div className="item-image"><a href="property_single.html"><img src={this.image_prefix + listing.profile_image} className="img-responsive" /></a>
                             <div className="item-for">{type}</div>
                             </div>
                         <div className="item-price">{listing_price}</div>
@@ -130,7 +133,7 @@ class ResultsList extends Component{
                         <div className="modal-header">
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <div className="media">
-                                <div className="media-left"><a href="property_single.html"><img src={listing.profile_image} className="img-rounded" width="64" /></a></div>
+                                <div className="media-left"><a href="property_single.html"><img src={this.image_prefix + listing.profile_image} className="img-rounded" width="64" /></a></div>
                                 <div className="media-body">
                                     <h4 className="media-heading">Send Message for<br />
                                         <small><a href="property_single.html">{listing.title}</a></small></h4>

@@ -63,7 +63,7 @@ if(listings.length > 0) {
                     location: listing.location,
                     id: listing.id,
                     status: listing.status,
-                    profile_image: "/img/" + listing.profile_image,
+                    profile_image: listing.profile_image,
                     created_at: created_ats[index]
                 };
 

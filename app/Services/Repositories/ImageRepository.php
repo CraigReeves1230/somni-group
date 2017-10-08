@@ -51,6 +51,10 @@ class ImageRepository implements iRepository
     }
 
     function delete($image){
+        // remove source image
+        if($image->getOriginal('path') !== 'generichouse.png'){
+            unlink("../public{$image->path}");
+        }
         $image->delete();
     }
 }

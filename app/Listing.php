@@ -37,4 +37,9 @@ class Listing extends Model
         return $this->hasOne('App\Appointment');
     }
 
+    // get profile image
+    function profile_image_object(){
+        return $this->belongsTo('App\Image', 'profile_image_id');
+    }
+
 }

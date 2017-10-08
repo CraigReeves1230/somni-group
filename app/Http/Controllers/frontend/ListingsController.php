@@ -20,16 +20,19 @@ class ListingsController extends Controller
     private $user_repository;
     private $address_repository;
     private $solr_client;
+    private $listing_repository;
+    private $image_repository;
 
 
     function __construct(ListingRepository $listing_repository,
-                         ListingGateway $listing_gateway,
+                         ListingGateway $listing_gateway, ImageRepository $image_repository,
                          UserRepository $user_repository, AddressRepository $address_repository){
         $this->listing_repository = $listing_repository;
         $this->listing_gateway = $listing_gateway;
         $this->user_repository = $user_repository;
         $this->address_repository = $address_repository;
         $this->solr_client = app('solr_listings');
+        $this->image_repository;
     }
 
     function create(){
@@ -44,8 +47,7 @@ class ListingsController extends Controller
             // create generic profile for listing
             $image = new Image(['path' => 'generichouse.png']);
             $listing->images()->save($image);
-            $image->profile_image = 'generichouse.png';
-            $image->profile_image_id = $listing->images[0]->id;
+            $this->make_profile($listing->id, $image->id, $image_repository);
 
             if ($request->ajax()) {
                 return response()->json(['ok' => true]);
@@ -148,13 +150,7 @@ class ListingsController extends Controller
             // save image
             $image = $image_repository->store($request, $this);
             $listing->images()->save($image);
-
-            // if there aren't any other images, by default, make it the profile
-            if(count($listing->images) < 3){
-                $image_repository->save($image);
-                $listing->profile_image = $image->path;
-                $this->listing_repository->save($listing);
-            }
+            $this->handle_profile_pic($listing);
 
         } else {
             return false;
@@ -172,12 +168,15 @@ class ListingsController extends Controller
     }
 
     function delete_photo($listing_id, $image_id, ImageRepository $image_repository){
+
         $user = Auth::user();
         $listing = $this->listing_repository->find($listing_id);
         $image = $image_repository->find($image_id);
 
         if($this->listing_gateway->enact($user, $listing)){
+
             $image_repository->delete($image);
+            $this->handle_profile_pic($listing);
 
             return redirect()->back();
         } else {
@@ -194,13 +193,47 @@ class ListingsController extends Controller
         if($this->listing_gateway->enact($user, $listing)){
 
             // make selected image the profile
-            $listing->profile_image = $orig_image->path;
+            $listing->profile_image = $orig_image->getOriginal('path');
+            $listing->profile_image_id = $orig_image->id;
             $this->listing_repository->save($listing);
+
             return redirect()->route('my_listings');
         } else {
             Session::flash('error', 'You do not have permission to change this listing.');
             return redirect('/');
         }
+    }
+
+    private function handle_profile_pic($listing){
+
+        // determine how many images listing has
+        $image_amount = (count($listing->images) - 1);
+
+        // if there is only one image, make it the profile pic
+        if($image_amount === 1){
+            $listing->profile_image = $listing->images[1]->getOriginal('path');
+            $listing->profile_image_id = $listing->images[1]->id;
+        }
+
+        // if there are no images, make the generic image the profile pic
+        if($image_amount === 0){
+            $listing->profile_image = $listing->images[0]->getOriginal('path');
+            $listing->profile_image_id = $listing->images[0]->id;
+        }
+
+        // if the profile image no longer exists, make the first image the profile pic
+        if(!$listing->profile_image_object){
+            $listing->profile_image = $listing->images[1]->getOriginal('path');
+            $listing->profile_image_id = $listing->images[1]->id;
+        }
+
+        // if no profile pic has been assigned and there is more than one image, make it the first one
+        if($image_amount > 0 && $listing->profile_image === $listing->images[0]->getOriginal('path')){
+            $listing->profile_image = $listing->images[1]->getOriginal('path');
+            $listing->profile_image_id = $listing->images[1]->id;
+        }
+
+        $this->listing_repository->save($listing);
     }
 
     function getAllDataFromListingResults(Request $request){
@@ -316,6 +349,7 @@ class ListingsController extends Controller
 
     // for sale link
     function all_listings($search_type){
+
         // get the current user if one is logged in
         $user = !Auth::guest() ? Auth::user() : null;
 

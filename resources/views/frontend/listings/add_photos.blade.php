@@ -19,7 +19,7 @@
             <!-- form to add photos -->
             <h1>Add Photos</h1>
             <hr>
-            {!! Form::open(['action' => ['ListingsController@save_photos', $listing->id],
+            {!! Form::open(['action' => ['frontend\ListingsController@save_photos', $listing->id],
             'method' => 'post', 'class' => 'dropzone']) !!}
 
             {!! Form::close() !!}

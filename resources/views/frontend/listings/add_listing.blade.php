@@ -110,9 +110,16 @@
                             </div>
                             <div id="location-error" class="error-message"></div>
                             <div class="form-group">
+                                <label class="col-sm-4 control-label">Year Built</label>
+                                <div class="col-sm-8">
+                                    <input id="year_built" name="year_built" type="text" class="form-control"
+                                           placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-sm-4 control-label">Address Line 1*</label>
                                 <div class="col-sm-8">
-                                    <input id="address" name="address" type="text" class="form-control"
+                                    <input id="address" name="address_line_1" type="text" class="form-control"
                                            placeholder="">
                                 </div>
                             </div>
@@ -136,7 +143,6 @@
                                 <div class="col-sm-8">
                                     <select class="form-control" id="state" name="state">
                                         <option value="GA">Georgia</option>
-                                        <option value="TX">Texas</option>
                                     </select>
                                 </div>
                             </div>
