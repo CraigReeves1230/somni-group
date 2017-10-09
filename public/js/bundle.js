@@ -10280,6 +10280,7 @@ if (listings.length > 0) {
                     type: listing.type,
                     area: listing.area,
                     location: listing.location,
+                    year_built: listing.year_built,
                     id: listing.id,
                     status: listing.status,
                     profile_image: listing.profile_image,
@@ -23672,6 +23673,26 @@ var ResultsList = function (_Component) {
             this.setState({ pageOfItems: pageOfItems });
         }
     }, {
+        key: 'renderYearBuilt',
+        value: function renderYearBuilt(listing) {
+            if (listing.year_built !== null) {
+                return _react2.default.createElement(
+                    'span',
+                    null,
+                    _react2.default.createElement(
+                        'li',
+                        null,
+                        'Year Built ',
+                        _react2.default.createElement(
+                            'span',
+                            null,
+                            listing.year_built
+                        )
+                    )
+                );
+            }
+        }
+    }, {
         key: 'renderListing',
         value: function renderListing(listing, index) {
 
@@ -23825,7 +23846,8 @@ var ResultsList = function (_Component) {
                                             null,
                                             listing.area
                                         )
-                                    )
+                                    ),
+                                    this.renderYearBuilt(listing)
                                 ),
                                 _react2.default.createElement('hr', null)
                             ),

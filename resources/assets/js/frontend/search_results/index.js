@@ -61,6 +61,7 @@ if(listings.length > 0) {
                     type: listing.type,
                     area: listing.area,
                     location: listing.location,
+                    year_built: listing.year_built,
                     id: listing.id,
                     status: listing.status,
                     profile_image: listing.profile_image,

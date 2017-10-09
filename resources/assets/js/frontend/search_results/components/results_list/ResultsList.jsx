@@ -24,6 +24,16 @@ class ResultsList extends Component{
         this.setState({pageOfItems});
     }
 
+    renderYearBuilt(listing){
+        if(listing.year_built !== null){
+            return(
+                <span>
+                    <li>Year Built <span>{listing.year_built}</span></li>
+                </span>
+            );
+        }
+    }
+
     renderListing(listing, index){
 
         // make sure number of bed and bathrooms is notated correctly
@@ -94,6 +104,7 @@ class ResultsList extends Component{
                             <div className="item-details">
                                 <ul>
                                     <li>Sq Ft <span>{listing.area}</span></li>
+                                    {this.renderYearBuilt(listing)}
                                 </ul>
                                 <hr />
                             </div>

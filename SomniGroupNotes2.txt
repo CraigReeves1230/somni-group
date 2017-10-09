@@ -1,6 +1,6 @@
 Only agents can create properties for sale.
 
-THere will be two types of listings: ones scraped from FMLS and agent uploads.
+There will be two types of listings: ones scraped from FMLS and agent uploads.
 
 To sign up as an agent:
 
@@ -24,7 +24,7 @@ We also need to set up a staging server for the site.
 
 We're only servicing Georgia for now.
 
-We also need to have a variable to determine if a house or property is sold. If it is sold, we will not have it will be removed from the search index.
+We also need to have a status to determine if a house or property is sold. If it is sold, we will not have it will be removed from the search index.
 
 Add year built to listings
 
@@ -32,4 +32,3 @@ Agents will be able to make changes to their listing.
 
 Once or twice a day, FMLS data will be pulled.
 
-The index will have to be 
