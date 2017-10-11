@@ -56,7 +56,7 @@
                 <li><a href="{{route('all_listings', ['search_type' => 'rent'])}}">For Rent</a></li>
                 <li><a href="{{route('all_listings', ['search_type' => 'sale'])}}">For Sale</a></li>
                 <li><a href="agent_list.html">Agents</a></li>
-                @if(!Auth::guest())
+                @if(!Auth::guest() && Auth::user()->agent)
                     <li><a href="{{route('my_listings')}}">My Listings</a></li>
                 @endif
                 @if(!Auth::guest())

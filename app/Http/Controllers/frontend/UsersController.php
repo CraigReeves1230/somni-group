@@ -292,4 +292,21 @@ class UsersController extends Controller
         }
 
     }
+
+    function agent_sign_up(){
+        $user = Auth::user();
+        return view('frontend.user.agent.sign_up');
+    }
+
+    function agent_sign_up_go(Request $request){
+
+        $user = Auth::user();
+        $user->agent = true;
+        $user->agent_type = $request->agent_type;
+        $user->license_number = $request->license_number;
+        $this->user_repository->save($user);
+
+        Session::flash('success', 'You have signed up as an agent. You may now add and edit property listings.');
+        return redirect('/');
+    }
 }

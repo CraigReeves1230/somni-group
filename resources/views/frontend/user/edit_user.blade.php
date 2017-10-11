@@ -7,7 +7,7 @@
                 <div class="col-md-10 col-md-offset-1">
                     <ol class="breadcrumb">
                         <li><a href="{{route('index')}}">Home</a></li>
-                        <li><a href="{{route('my_listings')}}">My Listings</a></li>
+                        <li><a href="{{route('my_listings')}}">Edit Account</a></li>
                     </ol>
                     <h1 class="page-header">Edit Account</h1>
                 </div>
@@ -25,8 +25,13 @@
             <div class="row">
                 <div class="col-md-5 col-md-offset-1">
                     <ul class="nav nav-tabs tab-lg" role="tablist">
-                        <li role="presentation" class="active"><a href="{{route('login')}}">Update Account</a></li>
-                        <li role="presentation"><a href="{{route('register_user')}}">Sign Up As Agent</a></li>
+                        <li role="presentation" class="active"><a href="{{route('edit_account')}}">Update
+                                Account</a></li>
+                        @if(!$user->agent)
+                            <li role="presentation"><a href="{{route('agent_sign_up')}}">Sign Up As Agent</a></li>
+                        @else
+                            <li role="presentation"><a href="{{route('agent_sign_up')}}">Edit Agent</a></li>
+                        @endif
                     </ul>
                         <form data-email-address-validate="{{route('update_email_and_address_validate')}}" id="regform"
                               action="{{route('update_account')}}"

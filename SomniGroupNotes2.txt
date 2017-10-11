@@ -32,3 +32,5 @@ Agents will be able to make changes to their listing.
 
 Once or twice a day, FMLS data will be pulled.
 
+Agent Status can be revoked. If that happens, none of the agent's properties will appear on the site anymore.
+
