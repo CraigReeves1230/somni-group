@@ -127,4 +127,8 @@ Route::group(['namespace' => 'frontend', 'middlewareGroups' => 'web'], function(
     Route::post('/users/admin/agent_signup_go', 'UsersController@agent_sign_up_go')->name('agent_sign_up_go')
         ->middleware('auth');
 
+    Route::get('/users/admin/agent_edit', 'UsersController@agent_edit')->name('agent_edit')->middleware('agent');
+
+    Route::post('/users/admin/agent_edit', 'UsersController@agent_edit_go')->name('agent_edit_go')->middleware('agent');
+
 });
