@@ -28,9 +28,9 @@
                         <li role="presentation" class="active"><a href="{{route('edit_account')}}">Update
                                 Account</a></li>
                         @if(!$user->agent)
-                            <li role="presentation"><a href="{{route('agent_sign_up')}}">Sign Up As Agent</a></li>
+                            <li role="presentation"><a href="{{route('agent_edit')}}">Sign Up As Agent</a></li>
                         @else
-                            <li role="presentation"><a href="{{route('agent_sign_up')}}">Edit Agent</a></li>
+                            <li role="presentation"><a href="{{route('agent_edit')}}">Edit Agent</a></li>
                         @endif
                     </ul>
                         <form data-email-address-validate="{{route('update_email_and_address_validate')}}" id="regform"

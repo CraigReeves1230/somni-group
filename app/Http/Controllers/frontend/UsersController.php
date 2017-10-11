@@ -293,9 +293,9 @@ class UsersController extends Controller
 
     }
 
-    function agent_sign_up(){
+    function agent_edit(){
         $user = Auth::user();
-        return view('frontend.user.agent.sign_up');
+        return view('frontend.user.agent.edit_agent', compact('user'));
     }
 
     function agent_sign_up_go(Request $request){
@@ -307,6 +307,24 @@ class UsersController extends Controller
         $this->user_repository->save($user);
 
         Session::flash('success', 'You have signed up as an agent. You may now add and edit property listings.');
-        return redirect('/');
+        if($request->ajax()){
+            return response()->json(['ok' => true]);
+        } else {
+            return redirect('/');
+        }
     }
+
+    function agent_edit_go(Request $request){
+        $user = Auth::user();
+        $user->agent_type = $request->agent_type;
+        $user->license_number = $request->license_number;
+        $user->update();
+
+        if($request->ajax()){
+            return response()->json(['ok' => true]);
+        } else {
+            return redirect('/');
+        }
+    }
+
 }

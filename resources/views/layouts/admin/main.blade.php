@@ -239,7 +239,7 @@
                 </form>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="modal" href="{{route('index')}}">
+                <a class="nav-link" href="/">
                     <i class="fa fa-fw fa-home"></i>
                     Back to Main</a>
             </li>

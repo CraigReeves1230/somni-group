@@ -26,8 +26,14 @@
                 <div class="col-md-5 col-md-offset-1">
                     <ul class="nav nav-tabs tab-lg" role="tablist">
                         <li role="presentation"><a href="{{route('edit_account')}}">Update Account</a></li>
-                            <li role="presentation" class="active"><a href="{{route('agent_sign_up')}}">Sign Up As
-                                Agent</a></li>
+                            @if(!$user->agent)
+                                <li role="presentation" class="active"><a href="{{route('agent_edit')}}">Sign Up As
+                                    Agent</a></li>
+                            @else
+                                <li role="presentation" class="active"><a href="{{route('agent_edit')
+                                }}">Edit Agent</a></li>
+                            @endif
+
                     </ul>
 
                     <!-- Display errors -->
@@ -40,21 +46,33 @@
                             </ul>
                         </div>
                     @endif
-                    <form method="post" action="{{route('agent_sign_up_go')}}">
+                    <form id="agent_form" method="post" action="{{$user->agent ? route('agent_edit_go') : route
+                    ('agent_sign_up_go')
+                    }}">
                         {{csrf_field()}}
                         <div class="form-group">
                             <label for="license_number">License No.</label>
                             <input type="text" name="license_number" id="license_number" class="form-control input-lg"
-                                   placeholder="Enter License No.">
+                                   placeholder="Enter License No." value="{{$user->license_number}}">
                         </div>
+                        <div id="license-number-error"
+                             class="error-message"><!-- filled by javascript automatically --></div>
                         <div class="form-group">
                             <label for="license_number">Agent Type</label>
                             <select name="agent_type" id="agent_type" class="form-control input-lg">
-                                <option value="agent">Real-Estate Broker (Agent)</option>
-                                <option value="landlord">Landlord</option>
-                                <option value="property_manager">Property Manager</option>
-                                <option value="others">Other Real Estate Professional</option>
+                                <option selected="{{$user->agent_type == 'agent' ? 'selected' : ''}}"
+                                        value="agent">Real-Estate
+                                    Broker (Agent)
+                                </option>
+                                <option {{$user->agent_type == 'landlord' ? 'selected' : ''}}
+                                        value="landlord">Landlord</option>
+                                <option {{$user->agent_type == 'property_manager' ? 'selected' : ''}}
+                                        value="property_manager">Property Manager</option>
+                                <option {{$user->agent_type == 'others' ? 'selected' : ''}}
+                                        value="others">Other Real Estate Professional</option>
                             </select>
+                            <div id="agent-type-error"
+                                 class="error-message"><!-- filled by javascript automatically --></div>
                         </div>
                         <input type="submit" value="Submit" class="btn btn-lg btn-primary">
                     </form>
@@ -68,4 +86,5 @@
             </div>
         </div>
     </div>
+    <script src="/js/bundle.js"></script>
 @endsection

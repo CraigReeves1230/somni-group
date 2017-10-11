@@ -122,13 +122,11 @@ Route::group(['namespace' => 'frontend', 'middlewareGroups' => 'web'], function(
 
     Route::get('/listings/all_listings/{search_type}', 'ListingsController@all_listings')->name('all_listings');
 
-    Route::get('/users/admin/agent_signup', 'UsersController@agent_sign_up')->name('agent_sign_up')->middleware('auth');
+    Route::get('/users/admin/agent', 'UsersController@agent_edit')->name('agent_edit')->middleware('auth');
 
     Route::post('/users/admin/agent_signup_go', 'UsersController@agent_sign_up_go')->name('agent_sign_up_go')
         ->middleware('auth');
 
-    Route::get('/users/admin/agent_edit', 'UsersController@agent_edit')->name('agent_edit')->middleware('agent');
-
-    Route::post('/users/admin/agent_edit', 'UsersController@agent_edit_go')->name('agent_edit_go')->middleware('agent');
+    Route::post('/users/admin/agent_edit_go', 'UsersController@agent_edit_go')->name('agent_edit_go')->middleware('agent');
 
 });
