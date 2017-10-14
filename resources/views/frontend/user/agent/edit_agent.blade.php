@@ -58,7 +58,7 @@
                         <div id="license-number-error"
                              class="error-message"><!-- filled by javascript automatically --></div>
                         <div class="form-group">
-                            <label for="license_number">Agent Type</label>
+                            <label for="agent_type">Agent Type</label>
                             <select name="agent_type" id="agent_type" class="form-control input-lg">
                                 <option selected="{{$user->agent_type == 'agent' ? 'selected' : ''}}"
                                         value="agent">Real-Estate
@@ -73,6 +73,44 @@
                             </select>
                             <div id="agent-type-error"
                                  class="error-message"><!-- filled by javascript automatically --></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="address_line_1">Address Line 1*</label>
+                            <input value="{{$user->address->line_1}}" name="address_line_1" id="address_line_1"
+                                   class="form-control
+                            input-lg"
+                                   type="text">
+                            <div id="address-line-1-error"
+                                 class="error-message"><!-- filled by javascript automatically --></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="address_line_2">Address Line 2</label>
+                            <input value="{{$user->address->line_2}}" name="address_line_2" id="address_line_2"
+                                   class="form-control
+                            input-lg"
+                                   type="text">
+                            <div id="address-line-2-error"
+                                 class="error-message"><!-- filled by javascript automatically --></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="city">City*</label>
+                            <input value="{{$user->address->city}}" name="city" id="city" class="form-control
+                            input-lg"
+                                   type="text">
+                            <div id="city-error"
+                                 class="error-message"><!-- filled by javascript automatically --></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="state">State*</label>
+                                <select class="form-control input-lg" id="state" name="state">
+                                    <option {{$user->address->state == 'GA' ? "selected='selected'" : ''}}
+                                            value="GA">Georgia</option>
+                                </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="zip">ZIP Code*</label>
+                            <input id="zip" value="{{$user->address->zip}}" name="zip" class="form-control input-lg"
+                                   type="text">
                         </div>
                         <input type="submit" value="Submit" class="btn btn-lg btn-primary">
                     </form>

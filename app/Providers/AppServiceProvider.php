@@ -24,20 +24,35 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        // Listings core
         $this->app->singleton('solr_listings', function(){
-
             $config = [
                 'endpoint' => [
                     'localhost' => [
-                        'host' => '192.168.10.10',
-                        'port' => '8983',
-                        'path' => '/solr/',
+                        'host' => env('SOLR_HOST'),
+                        'port' => env('SOLR_PORT'),
+                        'path' => env('SOLR_PATH'),
                         'core' => 'listings'
                     ]
                 ]
             ];
-
             return new Client($config);
         });
+
+        // Agents core
+        $this->app->singleton('solr_agents', function(){
+            $config = [
+                'endpoint' => [
+                    'localhost' => [
+                        'host' => env('SOLR_HOST'),
+                        'port' => env('SOLR_PORT'),
+                        'path' => env('SOLR_PATH'),
+                        'core' => 'agents'
+                    ]
+                ]
+            ];
+            return new Client($config);
+        });
+
     }
 }

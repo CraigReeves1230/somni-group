@@ -7,6 +7,7 @@ use App\Services\GeoLocator;
 use App\Services\Mailer;
 use App\Services\Repositories\AddressRepository;
 use App\Services\Repositories\UserRepository;
+use App\Services\SearchIndex;
 use App\Services\TokenMaker;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -20,14 +21,16 @@ class UsersController extends Controller
     private $token_service;
     private $user_repository;
     private $address_repository;
+    private $search_index;
     private $geolocator;
 
     function __construct(TokenMaker $token_service, UserRepository $user_repository, AddressRepository
-    $address_repository, GeoLocator $geolocator){
+    $address_repository, GeoLocator $geolocator, SearchIndex $search_index){
         $this->token_service = $token_service;
         $this->user_repository = $user_repository;
         $this->address_repository = $address_repository;
         $this->geolocator = $geolocator;
+        $this->search_index = $search_index;
     }
 
     // go to form to create a user
@@ -304,7 +307,14 @@ class UsersController extends Controller
         $user->agent = true;
         $user->agent_type = $request->agent_type;
         $user->license_number = $request->license_number;
+
+        // save address
+        $address = $this->address_repository->store($request, $this);
+        $user->address()->associate($address);
+
+        // save user and update search index
         $this->user_repository->save($user);
+        $this->search_index->add_agent($user);
 
         Session::flash('success', 'You have signed up as an agent. You may now add and edit property listings.');
         if($request->ajax()){
@@ -315,10 +325,15 @@ class UsersController extends Controller
     }
 
     function agent_edit_go(Request $request){
+
         $user = Auth::user();
         $user->agent_type = $request->agent_type;
         $user->license_number = $request->license_number;
+
+        // update the address and search index
+        $this->address_repository->update($user->address, $request, $this);
         $user->update();
+        $this->search_index->update_agent($user);
 
         if($request->ajax()){
             return response()->json(['ok' => true]);

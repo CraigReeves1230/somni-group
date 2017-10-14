@@ -82,27 +82,27 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="dob">Date of Birth</label>
-                                    <input type="date" class="form-control" name="dob" id="dob">
+                                    <input type="date" class="form-control input-lg" name="dob" id="dob">
                                 </div>
                                 <div class="form-group">
                                     <label for="address_line_1">Address Line 1</label>
-                                    <input type="text" class="form-control" name="address_line_1" id="address_line_1">
+                                    <input type="text" class="form-control input-lg" name="address_line_1" id="address_line_1">
                                     <div id="address_error"
                                          class="error-message"><!-- filled by javascript automatically --></div>
                                 </div>
                                 <div class="form-group">
                                     <label for="address_line_2">Address Line 2</label>
-                                    <input type="text" class="form-control" name="address_line_2" id="address_line_2">
+                                    <input type="text" class="form-control input-lg" name="address_line_2" id="address_line_2">
                                 </div>
                                 <div class="form-group">
                                     <label for="city">City</label>
-                                    <input type="text" class="form-control" name="city" id="city">
+                                    <input type="text" class="form-control input-lg" name="city" id="city">
                                     <div id="city_error"
                                          class="error-message"><!-- filled by javascript automatically --></div>
                                 </div>
                                 <div class="form-group">
                                     <label for="state">State</label>
-                                    <select class="form-control" id="state" name="state">
+                                    <select class="form-control input-lg" id="state" name="state">
                                         <option value="AL">Alabama</option>
                                         <option value="AK">Alaska</option>
                                         <option value="AZ">Arizona</option>
@@ -158,7 +158,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="zip">ZIP Code</label>
-                                    <input type="text" class="form-control" name="zip" id="zip">
+                                    <input type="text" class="form-control input-lg" name="zip" id="zip">
                                     <div id="zip_error"
                                          class="error-message"><!-- filled by javascript automatically --></div>
                                 </div>

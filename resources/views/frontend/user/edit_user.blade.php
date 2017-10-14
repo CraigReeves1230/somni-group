@@ -85,11 +85,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="dob">Date of Birth</label>
-                                <input value="{{$user->dob}}" type="date" class="form-control" name="dob" id="dob">
+                                <input value="{{$user->dob}}" type="date" class="form-control input-lg" name="dob" id="dob">
                             </div>
                             <div class="form-group">
                                 <label for="address">Address Line 1</label>
-                                <input value="{{$address->line_1}}" type="text" class="form-control"
+                                <input value="{{$address->line_1}}" type="text" class="form-control input-lg"
                                        name="address_line_1"
                                        id="address_line_1">
                                 <div id="address_error"
@@ -97,20 +97,20 @@
                             </div>
                             <div class="form-group">
                                 <label for="address_line_2">Address Line 2</label>
-                                <input value="{{$address->line_2}}" type="text" class="form-control"
+                                <input value="{{$address->line_2}}" type="text" class="form-control input-lg"
                                        name="address_line_2"
                                        id="address_line_2">
                             </div>
                             <div class="form-group">
                                 <label for="city">City</label>
-                                <input type="text" value="{{$address->city}}" class="form-control" name="city"
+                                <input type="text" value="{{$address->city}}" class="form-control input-lg" name="city"
                                        id="city">
                                 <div id="city_error"
                                      class="error-message"><!-- filled by javascript automatically --></div>
                             </div>
                             <label class="col-sm-4 control-label" for="state">State*</label>
                             <div class="col-sm-8">
-                                <select name="state" id="state" class="form-control">
+                                <select name="state" id="state" class="form-control input-lg">
                                     <option {{$address->state == 'AL' ? "selected='selected'" : ''}}
                                             value="AL">Alabama</option>
                                     <option {{$address->state == 'AK' ? "selected='selected'" : ''}}
@@ -217,7 +217,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="zip">ZIP Code</label>
-                                <input value="{{$address->zip}}" type="text" class="form-control" name="zip" id="zip">
+                                <input value="{{$address->zip}}" type="text" class="form-control input-lg" name="zip" id="zip">
                                 <div id="zip_error"
                                      class="error-message"><!-- filled by javascript automatically --></div>
                             </div>
