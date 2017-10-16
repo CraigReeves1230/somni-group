@@ -298,7 +298,24 @@ class UsersController extends Controller
 
     function agent_edit(){
         $user = Auth::user();
-        return view('frontend.user.agent.edit_agent', compact('user'));
+
+        // get user address info
+        if(!is_null($user->address)){
+            $address_line_1 = $user->address->line_1;
+            $address_line_2 = $user->address->line_2;
+            $city = $user->address->city;
+            $state = $user->address->state;
+            $zip = $user->address->zip;
+        } else {
+            $address_line_1 = '';
+            $address_line_2 = '';
+            $city = '';
+            $state = '';
+            $zip = '';
+        }
+
+        return view('frontend.user.agent.edit_agent',
+            compact('user', 'address_line_1', 'address_line_2', 'city', 'state', 'zip'));
     }
 
     function agent_sign_up_go(Request $request){

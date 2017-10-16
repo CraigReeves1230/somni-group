@@ -76,7 +76,7 @@
                         </div>
                         <div class="form-group">
                             <label for="address_line_1">Address Line 1*</label>
-                            <input value="{{$user->address->line_1}}" name="address_line_1" id="address_line_1"
+                            <input value="{{$address_line_1}}" name="address_line_1" id="address_line_1"
                                    class="form-control
                             input-lg"
                                    type="text">
@@ -85,7 +85,7 @@
                         </div>
                         <div class="form-group">
                             <label for="address_line_2">Address Line 2</label>
-                            <input value="{{$user->address->line_2}}" name="address_line_2" id="address_line_2"
+                            <input value="{{$address_line_2}}" name="address_line_2" id="address_line_2"
                                    class="form-control
                             input-lg"
                                    type="text">
@@ -94,7 +94,7 @@
                         </div>
                         <div class="form-group">
                             <label for="city">City*</label>
-                            <input value="{{$user->address->city}}" name="city" id="city" class="form-control
+                            <input value="{{$city}}" name="city" id="city" class="form-control
                             input-lg"
                                    type="text">
                             <div id="city-error"
@@ -103,13 +103,13 @@
                         <div class="form-group">
                             <label for="state">State*</label>
                                 <select class="form-control input-lg" id="state" name="state">
-                                    <option {{$user->address->state == 'GA' ? "selected='selected'" : ''}}
+                                    <option {{$state == 'GA' ? "selected='selected'" : ''}}
                                             value="GA">Georgia</option>
                                 </select>
                         </div>
                         <div class="form-group">
                             <label for="zip">ZIP Code*</label>
-                            <input id="zip" value="{{$user->address->zip}}" name="zip" class="form-control input-lg"
+                            <input id="zip" value="{{$zip}}" name="zip" class="form-control input-lg"
                                    type="text">
                         </div>
                         <input type="submit" value="Submit" class="btn btn-lg btn-primary">
