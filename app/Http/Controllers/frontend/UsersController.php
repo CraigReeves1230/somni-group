@@ -378,7 +378,12 @@ class UsersController extends Controller
         // save image
         $image = $this->image_repository->store($request, $this);
         $user->images()->save($image);
-        //$this->handle_profile_pic($listing);
+
+        // If user has no other photos, make it the avatar
+        if(count($user->images) === 1){
+            $this->assign_profile($image);
+        }
+
     }
 
     function photo_gallery(){
@@ -397,8 +402,26 @@ class UsersController extends Controller
     function assign_profile($image){
         $user = Auth::user();
         $user->profile_image_id = $image->id;
-        $user->profile_image = $image->path;
+        $user->profile_image = $image->getOriginal('path');
         $this->user_repository->save($user);
+    }
+
+    function delete_photo($id){
+        $user = Auth::user();
+        $image = $user->images()->find($id);
+
+        // if image is profile, change profile back to generic
+        if($image->id === $user->profile_image_id){
+            $user->profile_image = null;
+            $user->profile_image_id = null;
+            $this->user_repository->save($user);
+        }
+
+        // delete image
+        $this->image_repository->delete($image);
+
+        return redirect()->back();
+
     }
 
 }

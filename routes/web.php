@@ -139,4 +139,7 @@ Route::group(['namespace' => 'frontend', 'middlewareGroups' => 'web'], function(
     Route::post('/users/agent/photo/{id}/make_profile', 'UsersController@make_profile_pic')->name
     ('agent_make_profile_pic')->middleware('agent');
 
+    Route::delete('/users/agent/photo/{id}/delete', 'UsersController@delete_photo')->name('agent_delete_photo')
+        ->middleware('agent');
+
 });

@@ -52,10 +52,10 @@
                     }}">
                         @if($user->agent)
                             <div class="form-group">
-                                <label for="edit_avatar">Add Photo(s)</label><br>
+                                <label for="edit_avatar">Add Photo(s)/Photo Gallery</label><br>
                                 <a href="{{route('agent_add_photos')}}" id="edit_avatar" class="btn btn-primary
                                 btn-block
-                                btn-lg">Add Photo(s)</a>
+                                btn-lg">Photos</a>
                             </div>
                         @endif
                         {{csrf_field()}}
@@ -130,6 +130,16 @@
                          <div class="socal-login-buttons"> <a href="#" class="btn btn-social btn-lg btn-block btn-facebook"><i class="icon fa fa-facebook"></i> Sign In with Facebook</a> <a href="#" class="btn btn-social btn-lg btn-block btn-google"><i class="icon fa fa-google"></i> Sign In with Google</a> <a href="#" class="btn btn-social btn-lg btn-block btn-twitter"><i class="icon fa fa-twitter"></i> Sign In with Twitter</a> </div>
                      </div> -->
                 </div>
+                @if($user->agent)
+                    <div class="col-md-3 col-md-offset-1">
+                        <h2 class="text-center">{{$user->name}}</h2>
+                        @if($user->profile_image_id !== null)
+                            <img class="img-thumbnail img-fluid" src="{{$user->profile_image()->path}}" alt="">
+                        @else
+                            <img class="img-thumbnail img-fluid" src="/img/genericprofile.jpg" alt="">
+                        @endif
+                    </div>
+                @endif
             </div>
         </div>
     </div>

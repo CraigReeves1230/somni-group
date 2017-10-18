@@ -33,8 +33,9 @@
                                         Make Profile Pic
                                     </button>
                                 </form>
-                                <form action="#" method="post">
+                                <form action="{{route('agent_delete_photo', ['id' => $image->id])}}" method="post">
                                     {{csrf_field()}}
+                                    {{method_field('delete')}}
                                     <button type="submit" style="margin-top: 14px;"
                                             class="btn btn-block btn-danger">Delete</button>
                                 </form>
