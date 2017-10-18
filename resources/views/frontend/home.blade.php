@@ -59,7 +59,7 @@
             @if(Session::has('success'))
                 <div class="alert alert-success">{{session('success')}}</div>
             @endif
-            <div class="row">
+           <!-- <div class="row">
                 <div class="col-md-4">
                     <div class="image"> <img src="/img/demo/icons/1.png" width="80"> </div>
                     <h4>Lifestyle</h4>
@@ -78,10 +78,10 @@
                     <div class="caption">Understand your local market, learn how to get the best price for your property and find agents in your area.</div>
                     <div class="button"><a href="#">EXPLORE NOW</a></div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
-    <div class="feature-box gray" data-aos="fade-up">
+    <!-- <div class="feature-box gray" data-aos="fade-up">
         <div class="container">
             <div class="main-title">Featured Properties</div>
             <div class="main-title-description">Thinking abroad? You can now dream and discover international properties</div>
@@ -133,8 +133,8 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="feature-box testimonials" data-aos="fade-up">
+    </div> -->
+    <!-- <div class="feature-box testimonials" data-aos="fade-up">
         <div class="container">
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
@@ -172,5 +172,5 @@
                 singleItem:true
             });
         });
-    </script>
+    </script> -->
 @endsection
