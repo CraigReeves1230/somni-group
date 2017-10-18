@@ -122,11 +122,21 @@ Route::group(['namespace' => 'frontend', 'middlewareGroups' => 'web'], function(
 
     Route::get('/listings/all_listings/{search_type}', 'ListingsController@all_listings')->name('all_listings');
 
-    Route::get('/users/admin/agent', 'UsersController@agent_edit')->name('agent_edit')->middleware('auth');
+    Route::get('/users/agent', 'UsersController@agent_edit')->name('agent_edit')->middleware('auth');
 
-    Route::post('/users/admin/agent_signup_go', 'UsersController@agent_sign_up_go')->name('agent_sign_up_go')
+    Route::post('/users/agent_signup_go', 'UsersController@agent_sign_up_go')->name('agent_sign_up_go')
         ->middleware('auth');
 
-    Route::post('/users/admin/agent_edit_go', 'UsersController@agent_edit_go')->name('agent_edit_go')->middleware('agent');
+    Route::post('/users/agent_edit_go', 'UsersController@agent_edit_go')->name('agent_edit_go')->middleware('agent');
+
+    Route::get('/users/agent/add_photos', 'UsersController@add_photos')->name('agent_add_photos')->middleware('agent');
+
+    Route::post('/users/agent/save_photos', 'UsersController@save_photos')->name('agent_save_photos')->middleware('agent');
+
+    Route::get('/users/agent/photo_gallery', 'UsersController@photo_gallery')->name('agent_photo_gallery')
+        ->middleware('agent');
+
+    Route::post('/users/agent/photo/{id}/make_profile', 'UsersController@make_profile_pic')->name
+    ('agent_make_profile_pic')->middleware('agent');
 
 });

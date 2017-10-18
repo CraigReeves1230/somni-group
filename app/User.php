@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'dob', 'address_id', 'agent', 'agent_type'
+        'name', 'email', 'password', 'dob', 'address_id', 'agent', 'agent_type', 'profile_image', 'profile_image_id'
     ];
 
     /**
@@ -42,6 +42,16 @@ class User extends Authenticatable
     // get the address for user
     function address(){
         return $this->belongsTo('App\Address');
+    }
+
+    // get images
+    function images(){
+        return $this->morphMany('App\Image', 'imageable');
+    }
+
+    // returns the profile image
+    function profile_image(){
+        return $this->images()->find($this->profile_image_id);
     }
 
 }

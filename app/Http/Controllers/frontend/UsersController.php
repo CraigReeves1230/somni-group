@@ -6,6 +6,7 @@ use App\Address;
 use App\Services\GeoLocator;
 use App\Services\Mailer;
 use App\Services\Repositories\AddressRepository;
+use App\Services\Repositories\ImageRepository;
 use App\Services\Repositories\UserRepository;
 use App\Services\SearchIndex;
 use App\Services\TokenMaker;
@@ -21,16 +22,18 @@ class UsersController extends Controller
     private $token_service;
     private $user_repository;
     private $address_repository;
+    private $image_repository;
     private $search_index;
     private $geolocator;
 
     function __construct(TokenMaker $token_service, UserRepository $user_repository, AddressRepository
-    $address_repository, GeoLocator $geolocator, SearchIndex $search_index){
+    $address_repository, ImageRepository $image_repository, GeoLocator $geolocator, SearchIndex $search_index){
         $this->token_service = $token_service;
         $this->user_repository = $user_repository;
         $this->address_repository = $address_repository;
         $this->geolocator = $geolocator;
         $this->search_index = $search_index;
+        $this->image_repository = $image_repository;
     }
 
     // go to form to create a user
@@ -326,8 +329,12 @@ class UsersController extends Controller
         $user->license_number = $request->license_number;
 
         // save address
-        $address = $this->address_repository->store($request, $this);
-        $user->address()->associate($address);
+        if($user->address === null) {
+            $address = $this->address_repository->store($request, $this);
+            $user->address()->associate($address);
+        } else {
+            $this->address_repository->update($user->address, $request, $this);
+        }
 
         // save user and update search index
         $this->user_repository->save($user);
@@ -357,6 +364,41 @@ class UsersController extends Controller
         } else {
             return redirect('/');
         }
+    }
+
+    function add_photos(){
+        return view('frontend.user.agent.add_photo', compact('user'));
+    }
+
+    function save_photos(Request $request){
+
+        // get the user
+        $user = Auth::user();
+
+        // save image
+        $image = $this->image_repository->store($request, $this);
+        $user->images()->save($image);
+        //$this->handle_profile_pic($listing);
+    }
+
+    function photo_gallery(){
+        $user = Auth::user();
+        $images = $user->images;
+        return view('frontend.user.agent.photo_gallery', compact('images'));
+    }
+
+    function make_profile_pic($id){
+        $user = Auth::user();
+        $image = $user->images()->find($id);
+        $this->assign_profile($image);
+        return redirect('/users/agent');
+    }
+
+    function assign_profile($image){
+        $user = Auth::user();
+        $user->profile_image_id = $image->id;
+        $user->profile_image = $image->path;
+        $this->user_repository->save($user);
     }
 
 }

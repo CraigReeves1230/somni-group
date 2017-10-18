@@ -27,7 +27,7 @@ class LocationRepository implements iRepository
         // no need to validate...
 
         // get url
-        $url = $this->api_url($data->line_1, $data->zip);
+        $url = $this->api_url($data->address_line_1, $data->zip);
 
         // get data from url
         try
@@ -66,7 +66,7 @@ class LocationRepository implements iRepository
         // no need to validate...
 
         // get url
-        $url = $this->api_url($data->line_1, $data->zip);
+        $url = $this->api_url($data->address_line_1, $data->zip);
 
         // get data from url
         try

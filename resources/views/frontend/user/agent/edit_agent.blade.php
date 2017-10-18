@@ -46,9 +46,18 @@
                             </ul>
                         </div>
                     @endif
+
                     <form id="agent_form" method="post" action="{{$user->agent ? route('agent_edit_go') : route
                     ('agent_sign_up_go')
                     }}">
+                        @if($user->agent)
+                            <div class="form-group">
+                                <label for="edit_avatar">Add Photo(s)</label><br>
+                                <a href="{{route('agent_add_photos')}}" id="edit_avatar" class="btn btn-primary
+                                btn-block
+                                btn-lg">Add Photo(s)</a>
+                            </div>
+                        @endif
                         {{csrf_field()}}
                         <div class="form-group">
                             <label for="license_number">License No.</label>
@@ -124,5 +133,5 @@
             </div>
         </div>
     </div>
-    <script src="/js/bundle.js"></script>
+   <script src="/js/bundle.js"></script>
 @endsection

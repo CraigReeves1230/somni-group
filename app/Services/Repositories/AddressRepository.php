@@ -41,6 +41,7 @@ class AddressRepository implements iRepository
     {
         // no need for validation
 
+
         // update location
         $location = $address->location;
         if($this->location_repository->update($location, $data)){
