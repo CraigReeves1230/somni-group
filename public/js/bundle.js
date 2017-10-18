@@ -10319,6 +10319,7 @@ if (listings.length > 0) {
         var addresses = responsedata.addresses;
         var created_ats = responsedata.created_ats;
         var coords = responsedata.coords;
+        var user_avatars = responsedata.user_avatars;
         var phone_numbers = responsedata.phone_numbers;
 
         // compile listings
@@ -10348,7 +10349,8 @@ if (listings.length > 0) {
                         is_admin: users[index].admin,
                         is_master: users[index].master,
                         created_at: created_ats[index],
-                        phone_number: phone_numbers[index]
+                        phone_number: phone_numbers[index],
+                        avatar: user_avatars[index]
                     },
                     bedrooms: listing.bedrooms,
                     bathrooms: listing.bathrooms,
@@ -23860,6 +23862,12 @@ var ResultsList = function (_Component) {
                             { className: 'col-md-8' },
                             _react2.default.createElement(
                                 'div',
+                                { className: 'added-by-photo' },
+                                ' ',
+                                _react2.default.createElement('img', { src: listing.user.avatar, className: 'img-rounded', width: '64' })
+                            ),
+                            _react2.default.createElement(
+                                'div',
                                 { className: 'item-price' },
                                 listing_price
                             ),
@@ -23931,7 +23939,7 @@ var ResultsList = function (_Component) {
                                 { className: 'item-actions' },
                                 _react2.default.createElement(
                                     'a',
-                                    { href: listing.user.phone_number },
+                                    { href: '#' },
                                     _react2.default.createElement('i', {
                                         className: 'fa fa-phone' }),
                                     listing.user.phone_number

@@ -244,6 +244,7 @@ class ListingsController extends Controller
             $created_ats = [];
             $phone_numbers = [];
             $coords = [];
+            $user_avatars = [];
             foreach($listings as $listing){
                 $created_at = $this->listing_repository->find($listing['id'])->created_at->diffForHumans();
                 $user = $this->user_repository->find($listing['user_id']);
@@ -251,18 +252,21 @@ class ListingsController extends Controller
                 $phone = $user->phone_number;
                 $phone_number = "({$phone->area_code}) " . substr_replace($phone->number, '-', 3, 0);
                 $point = $address->location;
+                $user_avatar = $user->profile_image_id !== null ? $user->profile_image()->path : '/img/genericprofile.jpg';
                 array_push($addresses, $address);
                 array_push($users, $user);
                 array_push($created_ats, $created_at);
                 array_push($phone_numbers, $phone_number);
                 array_push($coords, $point);
+                array_push($user_avatars, $user_avatar);
             }
             return response()->json([
                 'addresses' => $addresses,
                 'users' => $users,
                 'created_ats' => $created_ats,
                 'phone_numbers' => $phone_numbers,
-                'coords' => $coords
+                'coords' => $coords,
+                'user_avatars' => $user_avatars
             ]);
         }
     }

@@ -25,6 +25,7 @@ if(listings.length > 0) {
         let addresses = responsedata.addresses;
         let created_ats = responsedata.created_ats;
         let coords = responsedata.coords;
+        let user_avatars = responsedata.user_avatars;
         let phone_numbers = responsedata.phone_numbers;
 
         // compile listings
@@ -54,7 +55,8 @@ if(listings.length > 0) {
                         is_admin: users[index].admin,
                         is_master: users[index].master,
                         created_at: created_ats[index],
-                        phone_number: phone_numbers[index]
+                        phone_number: phone_numbers[index],
+                        avatar: user_avatars[index]
                     },
                     bedrooms: listing.bedrooms,
                     bathrooms: listing.bathrooms,

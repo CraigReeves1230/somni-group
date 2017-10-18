@@ -91,6 +91,7 @@ class ResultsList extends Component{
                             <div className="added-by">by <span>{listing.user.name}</span></div>
                         </div>
                         <div className="col-md-8">
+                            <div className="added-by-photo"> <img src={listing.user.avatar} className="img-rounded" width="64" /></div>
                             <div className="item-price">{listing_price}</div>
                             <h3 className="item-title"><a href="property_single.html">{listing.title}</a></h3>
                             <div className="item-details-i">
@@ -108,7 +109,7 @@ class ResultsList extends Component{
                                 </ul>
                                 <hr />
                             </div>
-                            <div className="item-actions"><a href={listing.user.phone_number}><i
+                            <div className="item-actions"><a href="#"><i
                                 className="fa fa-phone"></i>{listing.user.phone_number}</a>
                                 <a href="#" data-toggle="modal" data-target={"#leadform-" + listing.id}><i
                                     className="fa fa-envelope-o"></i> Contact</a><a href="#"></a>
