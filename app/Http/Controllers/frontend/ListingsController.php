@@ -252,7 +252,7 @@ class ListingsController extends Controller
                 $phone = $user->phone_number;
                 $phone_number = "({$phone->area_code}) " . substr_replace($phone->number, '-', 3, 0);
                 $point = $address->location;
-                $user_avatar = $user->profile_image_id !== null ? $user->profile_image()->path : '/img/genericprofile.jpg';
+                $user_avatar = $user->profile_image_path();
                 array_push($addresses, $address);
                 array_push($users, $user);
                 array_push($created_ats, $created_at);

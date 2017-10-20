@@ -142,4 +142,11 @@ Route::group(['namespace' => 'frontend', 'middlewareGroups' => 'web'], function(
     Route::delete('/users/agent/photo/{id}/delete', 'UsersController@delete_photo')->name('agent_delete_photo')
         ->middleware('agent');
 
+    Route::post('/users/agent/search', 'UsersController@search_agent')->name('agent_search');
+
+    Route::get('/user/agent/search_result/{search_query}&type={search_type}', 'UsersController@search_results')->name('agent_search_results');
+
+    Route::get('/user/agents', 'UsersController@agents_link')->name('agents_link');
+
+
 });

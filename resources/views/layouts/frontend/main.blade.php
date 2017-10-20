@@ -55,7 +55,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="{{route('all_listings', ['search_type' => 'rent'])}}">For Rent</a></li>
                 <li><a href="{{route('all_listings', ['search_type' => 'sale'])}}">For Sale</a></li>
-                <li><a href="agent_list.html">Agents</a></li>
+                <li><a href="{{route('agents_link')}}">Agents</a></li>
                 @if(!Auth::guest() && Auth::user()->agent)
                     <li><a href="{{route('my_listings')}}">My Listings</a></li>
                 @endif
@@ -143,12 +143,12 @@
                     <div class="col-md-4">
                         <p><img src="/img/somni-logo-main.png" /></p>
                         <address>
-                            <strong>The Somni Group</strong><br>
-                            1355 Market Street, Suite 900<br>
-                            San Francisco, CA 94103<br>
-                            <abbr title="Phone">P:</abbr> (123) 456-7890
+                            <strong>Somni Group</strong><br>
+                            11555 Medlock Bridge Rd. Ste 100<br>
+                            Johns Creek, GA 30097<br>
+                            <abbr title="Phone">P:</abbr> (678) 551-2556
                         </address>
-                        <p class="text-muted">Copyright &copy; 2017 The Somni Group<br />
+                        <p class="text-muted">Copyright &copy; 2017 Somni Group<br />
                             All rights reserved</p>
                     </div>
                     <div class="col-md-2">
@@ -171,14 +171,14 @@
                     </div>
                     <div class="col-md-4">
                         <div class="social-sharebox"> <a href="#"><i class="fa fa-twitter"></i></a> <a href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i class="fa fa-google"></i></a> <a href="#"><i class="fa fa-linkedin"></i></a> <a href="#"><i class="fa fa-youtube-play"></i></a> <a href="#"><i class="fa fa-pinterest"></i></a> </div>
-                        <form>
+                        <!-- <form>
                             <h4>Subscribe Newsletter</h4>
                             <div class="input-group input-group-lg">
                                 <input type="email" class="form-control" placeholder="Email Address">
                                 <span class="input-group-btn">
                     <button class="btn btn-primary" type="button">Go!</button>
                     </span> </div>
-                        </form>
+                        </form> -->
                     </div>
                 </div>
             </div>

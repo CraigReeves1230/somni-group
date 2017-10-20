@@ -100,8 +100,7 @@ class ResultsList extends Component{
                                 <span className="bathrooms" data-toggle="tooltip"
                                       title={bathrooms + " Bathrooms"}>{bathrooms} <i className="fa fa-bath"></i></span>
                             </div>
-                            <div
-                                className="item-location">{listing.address.line_1} {listing.address.line_2}, {listing.address.city}, {listing.address.state}, {listing.address.zip}</div>
+                            <div className="item-location">{listing.address.line_1} {listing.address.line_2}, {listing.address.city}, {listing.address.state}, {listing.address.zip}</div>
                             <div className="item-details">
                                 <ul>
                                     <li>Sq Ft <span>{listing.area}</span></li>

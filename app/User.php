@@ -54,4 +54,15 @@ class User extends Authenticatable
         return $this->images()->find($this->profile_image_id);
     }
 
+    // returns the user's profile image path
+    function profile_image_path(){
+        if($this->profile_image_id !== null){
+            $profile_image_path = $this->profile_image()->path;
+        } else {
+            $profile_image_path = env('IMAGE_FOLDER') . "genericprofile.jpg";
+        }
+
+        return $profile_image_path;
+    }
+
 }

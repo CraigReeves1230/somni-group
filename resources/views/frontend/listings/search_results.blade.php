@@ -6,7 +6,7 @@
                  data-search-query="{{$search_query}}"
                  data-search-type="{{$search_type}}"
                  data-search-link="{{route('listings_search')}}"
-                 id="react_root"></div>
+                 id="search_results"></div>
     </div>
 
 

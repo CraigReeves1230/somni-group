@@ -15,7 +15,7 @@ class Image extends Model
 
     //provide image with file location with accessor
     public function getPathAttribute($value){
-        $new_string = "/img/" . $value;
+        $new_string = env('IMAGE_FOLDER') . $value;
         return $new_string;
     }
 

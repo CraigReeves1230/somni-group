@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import App from './components/App';
 
 // set variables
-const root = document.getElementById("react_root");
+const root = document.getElementById("search_results");
 let listings = JSON.parse(root.dataset.listings);
 let search_query = root.dataset.searchQuery;
 let search_type = root.dataset.searchType;

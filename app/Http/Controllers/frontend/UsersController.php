@@ -25,6 +25,7 @@ class UsersController extends Controller
     private $image_repository;
     private $search_index;
     private $geolocator;
+    private $solr_client;
 
     function __construct(TokenMaker $token_service, UserRepository $user_repository, AddressRepository
     $address_repository, ImageRepository $image_repository, GeoLocator $geolocator, SearchIndex $search_index){
@@ -34,6 +35,7 @@ class UsersController extends Controller
         $this->geolocator = $geolocator;
         $this->search_index = $search_index;
         $this->image_repository = $image_repository;
+        $this->solr_client = app('solr_agents');
     }
 
     // go to form to create a user
@@ -422,6 +424,96 @@ class UsersController extends Controller
 
         return redirect()->back();
 
+    }
+
+    function agents_link(){
+
+        // get address to form default search query if address exists, otherwise do wildcard search
+        $search_query = "*";
+
+        if(!Auth::guest()) {
+            $user = Auth::user();
+            if ($user->address !== null) {
+                // form search query
+                $search_query = $user->address->line_1 . " " . $user->address->city . " " . $user->address->zip;
+                $search_query = str_replace(" ", "+", $search_query);
+                $search_query = str_replace(",", "", $search_query);
+            }
+        }
+
+        return redirect()->route('agent_search_results', ['search_query' => $search_query, 'search_type' => 'agent']);
+    }
+
+    function search_agent(Request $request){
+
+        // form search query
+        $search_query = str_replace(" ", "+", $request->search_field);
+        $search_query = str_replace(",", "", $search_query);
+
+        // don't allow user to not put something in
+        if($search_query == ""){
+            return redirect()->back();
+        }
+
+        // get search type
+        $search_type = $request->search_type;
+
+        if($request->ajax()){
+            $search_results_link = route('agent_search_results', ['query' => $search_query, 'type' => $search_type]);
+            return response()->json(['search_results_link' => $search_results_link]);
+        } else {
+            return redirect()->route('agent_search_results', ['query' => $search_query, 'type' => $search_type]);
+        }
+
+    }
+
+    function search_results($search_query, $search_type){
+
+        // format search query
+        $search_query = str_replace("+", " ", $search_query);
+
+        //set up query
+        $geo_locator = $this->geolocator;
+        $location = $geo_locator->convert($search_query);
+        $client = $this->solr_client;
+        $query = $client->createSelect();
+        $helper = $query->getHelper();
+
+        $latitude = $location['latitude'];
+        $longitude = $location['longitude'];
+        $distance = 50;  // search within 50 miles
+
+        $statement = "agent_type:{$search_type}";
+
+        // set query and get search results
+        $query->createFilterQuery('agent_type')->setQuery($statement);
+
+        // if the asterisk is used, it will return all listings, if address entered, filter by location
+        if($search_query !== '*') {
+            $query->createFilterQuery('distance')->setQuery(
+                $helper->geofilt(
+                    'latlon',
+                    doubleval($latitude),
+                    doubleval($longitude),
+                    doubleval($distance * 1.609344))
+            );
+        }
+
+        // store query in resultset
+        $resultset = $client->select($query);
+
+        // store all search results in array
+        $records = [];
+        foreach($resultset as $result){
+            $agent = $this->user_repository->find_agent($result->id);
+            $record = ['agent' => $agent, 'address' => $agent->address,
+               'phone_number' => $agent->phone_number->formatted_number(), 'profile_image' => $agent->profile_image_path
+            ()];
+            array_push($records, $record);
+        }
+
+        return view('frontend.user.agent.search_results',
+            compact('records', 'search_type', 'search_query'));
     }
 
 }

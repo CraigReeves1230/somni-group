@@ -133,11 +133,7 @@
                 @if($user->agent)
                     <div class="col-md-3 col-md-offset-1">
                         <h2 class="text-center">{{$user->name}}</h2>
-                        @if($user->profile_image_id !== null)
-                            <img class="img-thumbnail img-fluid" src="{{$user->profile_image()->path}}" alt="">
-                        @else
-                            <img class="img-thumbnail img-fluid" src="/img/genericprofile.jpg" alt="">
-                        @endif
+                        <img class="img-thumbnail img-fluid" src="{{$user->profile_image_path()}}" alt="">
                     </div>
                 @endif
             </div>

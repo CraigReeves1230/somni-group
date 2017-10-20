@@ -182,6 +182,10 @@ class UserRepository implements iRepository
         return $ret_val;
     }
 
+    function find_agent($id){
+        return User::where([['id', $id], ['agent', true]])->first();
+    }
+
     function delete($user){
         $user->delete();
     }
